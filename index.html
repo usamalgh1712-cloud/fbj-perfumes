@@ -416,43 +416,62 @@
         // =========================================================================
         // AUTOMATIC ORDER SUBMISSION TO GOOGLE SPREADSHEET / DATABASE
         // =========================================================================
-        async function submitOrderToDatabase(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.textContent = "Saving Order...";
+       // PASTE YOUR NEW GOOGLE URL HERE (Must end in /exec):
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzltC-RsNY2gpDM86oOkcZRFnE76uqPwurSgkGQZ_xvuL_Dh-LO1xAP3jRhYJwnM_xyLA/exec";
 
-            const orderId = "FBJ-" + Math.floor(100000 + Math.random() * 900000);
-            const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-            const shipping = subtotal >= 2500 ? 0 : 200;
-            const total = subtotal + shipping;
-            const itemsSummary = cart.map(i => `${i.name} (${i.qty}x)`).join(", ");
+async function submitOrderToDatabase(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = "Saving Order...";
 
-            const payload = {
-                orderId: orderId,
-                name: document.getElementById('custName').value.trim(),
-                phone: document.getElementById('custPhone').value.trim(),
-                address: document.getElementById('custAddress').value.trim(),
-                city: document.getElementById('custCity').value.trim(),
-                notes: document.getElementById('custNotes').value.trim(),
-                items: itemsSummary,
-                total: `Rs. ${total.toLocaleString()}`
-            };
+    const orderId = "FBJ-" + Math.floor(100000 + Math.random() * 900000);
+    const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+    const shipping = subtotal >= 2500 ? 0 : 200;
+    const total = subtotal + shipping;
+    const itemsSummary = cart.map(i => `${i.name} (${i.qty}x)`).join(", ");
 
-            try {
-                if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes("PASTE_YOUR")) {
-                    await fetch(GOOGLE_SHEET_URL, {
-                        method: "POST",
-                        mode: "no-cors",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(payload)
-                    });
-                }
-            } catch (err) {
-                console.warn("Spreadsheet submission error:", err);
-            }
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+    const city = document.getElementById('custCity').value.trim();
+    const notes = document.getElementById('custNotes').value.trim();
 
-            // Finish and show success
+    // Create parameters URL string
+    const queryParams = new URLSearchParams({
+        orderId: orderId,
+        name: name,
+        phone: phone,
+        address: address,
+        city: city,
+        notes: notes,
+        items: itemsSummary,
+        total: `Rs. ${total.toLocaleString()}`
+    });
+
+    const finalUrl = `${GOOGLE_SHEET_URL}?${queryParams.toString()}`;
+
+    try {
+        // Send order request
+        if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes("https://script.google.com/macros/s/AKfycbzltC-RsNY2gpDM86oOkcZRFnE76uqPwurSgkGQZ_xvuL_Dh-LO1xAP3jRhYJwnM_xyLA/exec")) {
+            await fetch(finalUrl, { mode: 'no-cors' });
+        }
+    } catch (err) {
+        console.error("Order submission error:", err);
+    }
+
+    // Show order success modal
+    closeCheckout();
+    document.getElementById('successOrderId').textContent = `Order ID: #${orderId}`;
+    document.getElementById('successModal').classList.add('open');
+
+    // Reset Cart
+    cart = [];
+    saveCart();
+    document.getElementById('orderForm').reset();
+    btn.disabled = false;
+    btn.textContent = "Confirm & Place Order";
+}
             closeCheckout();
             document.getElementById('successOrderId').textContent = `Order ID: #${orderId}`;
             document.getElementById('successModal').classList.add('open');
