@@ -1,16 +1,3 @@
-Here is the **100% complete, final code**. 
-
-I have made the following updates specifically for you:
-1. **Google Sheet URL is pre-pasted:** You do not need to edit or touch any code. It will send orders directly to your sheet.
-2. **Simple Bottle with Flowers:** I completely redesigned the bottle. It is now a beautiful, clean, minimalist glass bottle surrounded by floating flowers (🌸 🌺 ✨). 
-
-### How to use:
-1. Open your text editor (Notepad, VS Code, etc.).
-2. Delete everything inside it.
-3. Copy all the code below and paste it in.
-4. Save the file as **`index.html`** and publish it.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,7 +80,7 @@ I have made the following updates specifically for you:
         .filter-tab.active, .filter-tab:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
 
         /* Products Grid */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; }
         .product-card {
             background: var(--dark); border: 1px solid rgba(201, 168, 76, 0.12);
             border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
@@ -103,7 +90,7 @@ I have made the following updates specifically for you:
         
         /* Minimal Bottle with Flowers Design */
         .product-image {
-            height: 260px; background: #080808; display: flex; align-items: center; justify-content: center;
+            height: 240px; background: #080808; display: flex; align-items: center; justify-content: center;
             position: relative; border-bottom: 1px solid rgba(201, 168, 76, 0.08); overflow: hidden;
         }
         .product-tag {
@@ -123,13 +110,13 @@ I have made the following updates specifically for you:
             align-items: center;
         }
 
-        /* The Glass Bottle */
+        /* Glass Bottle */
         .minimal-bottle {
-            width: 75px;
-            height: 110px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            width: 70px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
             border: 2px solid rgba(201, 168, 76, 0.5);
-            border-radius: 20px 20px 5px 5px;
+            border-radius: 18px 18px 5px 5px;
             position: relative;
             display: flex;
             align-items: center;
@@ -140,8 +127,8 @@ I have made the following updates specifically for you:
 
         /* Bottle Cap */
         .minimal-cap {
-            width: 26px;
-            height: 22px;
+            width: 24px;
+            height: 20px;
             background: linear-gradient(to right, #e8d5a3, #c9a84c, #a07e2e);
             border-radius: 3px 3px 0 0;
             margin-bottom: 2px;
@@ -150,8 +137,8 @@ I have made the following updates specifically for you:
 
         /* Bottle Label inside glass */
         .minimal-label {
-            width: 80%;
-            padding: 5px 0;
+            width: 82%;
+            padding: 4px 0;
             background: var(--darker);
             border: 1px solid var(--gold);
             text-align: center;
@@ -162,17 +149,17 @@ I have made the following updates specifically for you:
             text-transform: uppercase;
         }
 
-        /* The Flowers around the bottle */
+        /* Floating Flowers */
         .flowers {
             position: absolute;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
             z-index: 3;
         }
-        .f1 { top: -15px; left: -30px; animation: float 3s ease-in-out infinite; }
-        .f2 { bottom: 10px; right: -30px; animation: float 4s ease-in-out infinite reverse; font-size: 1.4rem; }
-        .f3 { top: 40px; right: -25px; animation: float 3.5s ease-in-out infinite; font-size: 1.2rem; }
-        .f4 { bottom: -10px; left: -15px; animation: float 4.5s ease-in-out infinite; font-size: 1rem; }
+        .f1 { top: -15px; left: -28px; animation: float 3s ease-in-out infinite; }
+        .f2 { bottom: 10px; right: -28px; animation: float 4s ease-in-out infinite reverse; font-size: 1.3rem; }
+        .f3 { top: 35px; right: -22px; animation: float 3.5s ease-in-out infinite; font-size: 1.1rem; }
+        .f4 { bottom: -10px; left: -12px; animation: float 4.5s ease-in-out infinite; font-size: 0.9rem; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -180,9 +167,10 @@ I have made the following updates specifically for you:
         }
 
         .product-info { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-        .product-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 4px; }
-        .product-inspired { font-size: 0.75rem; color: var(--gold-light); margin-bottom: 15px; font-style: italic; }
-        .product-bottom { margin-top: auto; display: flex; align-items: center; justify-content: space-between; }
+        .product-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 2px; }
+        .product-inspired { font-size: 0.75rem; color: var(--gold-light); margin-bottom: 10px; font-style: italic; }
+        .product-desc { font-size: 0.78rem; color: #b8b8b8; line-height: 1.55; margin-bottom: 18px; font-weight: 300; }
+        .product-bottom { margin-top: auto; display: flex; align-items: center; justify-content: space-between; pt-2; }
         .product-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); }
         .add-btn {
             padding: 10px 18px; background: var(--gold); color: var(--black); border: none;
@@ -263,7 +251,7 @@ I have made the following updates specifically for you:
         <div>
             <div class="hero-badge">✦ Premium Inspired Fragrances ✦</div>
             <h1 class="hero-title">Luxury Scents,<br><span>Unmatched Prices</span></h1>
-            <p class="hero-desc">Experience 80%+ scent similarity to iconic designer fragrances. 50ml Eau De Parfum bottles delivered to your doorstep with Cash on Delivery.</p>
+            <p class="hero-desc">Experience 80%+ scent similarity to iconic designer fragrances. High-concentration 50ml EDP bottles delivered with Cash on Delivery across Pakistan.</p>
             <a href="#collection" class="btn-primary">Shop The Collection</a>
         </div>
     </section>
@@ -273,7 +261,7 @@ I have made the following updates specifically for you:
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">The Fragrance Lineup</h2>
-                <p class="section-subtitle">Select your favourite scent to place your order</p>
+                <p class="section-subtitle">Select your favourite scent to place your order (All bottles are 50ml EDP)</p>
             </div>
 
             <div class="filter-tabs">
@@ -332,7 +320,7 @@ I have made the following updates specifically for you:
                     </div>
                     <div class="form-group">
                         <label>Notes (Optional)</label>
-                        <input type="text" id="custNotes" class="form-input" placeholder="Any instructions">
+                        <input type="text" id="custNotes" class="form-input" placeholder="Any special instructions">
                     </div>
                 </div>
 
@@ -351,7 +339,7 @@ I have made the following updates specifically for you:
             <div style="font-size:3.5rem;color:var(--success);margin-bottom:10px;">✓</div>
             <h2 style="font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:10px;font-size:2rem;">Order Received!</h2>
             <p id="successOrderId" style="color:var(--gray);font-size:0.9rem;margin-bottom:15px;letter-spacing:1px;"></p>
-            <p style="font-size:0.95rem;color:var(--light-gray);margin-bottom:30px;line-height:1.6;">Thank you! Your order has been securely saved in our system. Our team will prepare your parcel for dispatch shortly.</p>
+            <p style="font-size:0.95rem;color:var(--light-gray);margin-bottom:30px;line-height:1.6;">Thank you! Your order has been securely saved in our database. Our team will prepare your parcel for dispatch shortly.</p>
             <button class="btn-primary" onclick="closeSuccess()">Continue Browsing</button>
         </div>
     </div>
@@ -366,33 +354,32 @@ I have made the following updates specifically for you:
 
     <script>
         // =========================================================================
-        // YOUR EXACT GOOGLE SHEET URL IS PASTED HERE ALREADY
-        // DO NOT CHANGE THIS LINE.
+        // YOUR EXACT GOOGLE SHEET SCRIPT URL
         // =========================================================================
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyHFaXuIhyeiZglAJnjdMonYJyikylDUcMtb4_PXKsiUZ46hdUJLxvAYRo7-ESHopt81Q/exec";
 
-        // Perfume Catalog
+        // Perfume Catalog with 50ml pricing and custom fragrance descriptions
         const catalog = [
-            { id: 1, name: "FBJ Avent", inspired: "Creed Aventus", price: 1499, gender: "men" },
-            { id: 2, name: "FBJ Sauvage", inspired: "Dior Sauvage", price: 1499, gender: "men" },
-            { id: 3, name: "FBJ Bleu", inspired: "Bleu de Chanel", price: 1499, gender: "men" },
-            { id: 4, name: "FBJ Aqua", inspired: "Acqua di Giò", price: 1399, gender: "men" },
-            { id: 5, name: "FBJ Million", inspired: "Paco Rabanne 1 Million", price: 1399, gender: "men" },
-            { id: 6, name: "FBJ Invict", inspired: "Paco Rabanne Invictus", price: 1399, gender: "men" },
-            { id: 7, name: "FBJ Eros", inspired: "Versace Eros", price: 1399, gender: "men" },
-            { id: 8, name: "FBJ Cool", inspired: "Davidoff Cool Water", price: 1299, gender: "men" },
-            { id: 9, name: "FBJ Ultra", inspired: "JPG Ultra Male", price: 1499, gender: "men" },
-            { id: 10, name: "FBJ Code", inspired: "Armani Code", price: 1399, gender: "men" },
-            { id: 11, name: "FBJ Leather", inspired: "Tom Ford Tuscan Leather", price: 1499, gender: "men" },
-            { id: 12, name: "FBJ Oud", inspired: "Tom Ford Oud Wood", price: 1599, gender: "men" },
-            { id: 13, name: "FBJ Black", inspired: "YSL Black Opium", price: 1399, gender: "women" },
-            { id: 14, name: "FBJ Libre", inspired: "YSL Libre", price: 1399, gender: "women" },
-            { id: 15, name: "FBJ Good Girl", inspired: "Carolina Herrera Good Girl", price: 1399, gender: "women" },
-            { id: 16, name: "FBJ Bloom", inspired: "VS Bombshell", price: 1299, gender: "women" },
-            { id: 17, name: "FBJ Flora", inspired: "Gucci Flora", price: 1399, gender: "women" },
-            { id: 18, name: "FBJ Crystal", inspired: "Versace Bright Crystal", price: 1299, gender: "women" },
-            { id: 19, name: "FBJ Burberry", inspired: "My Burberry", price: 1399, gender: "women" },
-            { id: 20, name: "FBJ Poison", inspired: "Dior Poison", price: 1399, gender: "women" }
+            { id: 1, name: "FBJ Avent", inspired: "Creed Aventus", price: 1499, gender: "men", desc: "Opens with a vibrant burst of fruit and citrus before settling into a rich, smoky, and woody base." },
+            { id: 2, name: "FBJ Sauvage", inspired: "Dior Sauvage", price: 1499, gender: "men", desc: "Radiates fresh Calabrian bergamot spiked with Sichuan pepper and warm, woody ambroxan." },
+            { id: 3, name: "FBJ Bleu", inspired: "Bleu de Chanel", price: 1499, gender: "men", desc: "A sophisticated fusion of crisp citrus, rich cedarwood, and aromatic sandalwood notes." },
+            { id: 4, name: "FBJ Aqua", inspired: "Acqua di Giò", price: 1399, gender: "men", desc: "Fresh aquatic sea spray balanced with sweet jasmine, rosemary, and warm cedarwood." },
+            { id: 5, name: "FBJ Million", inspired: "Paco Rabanne 1 Million", price: 1399, gender: "men", desc: "An intoxicating blend of spicy cinnamon, blood mandarin, and rich leather accord." },
+            { id: 6, name: "FBJ Invict", inspired: "Paco Rabanne Invictus", price: 1399, gender: "men", desc: "Vibrant grapefruit and marine notes layered over aromatic bay leaf and guaiac wood." },
+            { id: 7, name: "FBJ Eros", inspired: "Versace Eros", price: 1399, gender: "men", desc: "Vibrant mint leaf and lemon zest complemented by warm tonka bean and sweet vanilla." },
+            { id: 8, name: "FBJ Cool", inspired: "Davidoff Cool Water", price: 1299, gender: "men", desc: "Crisp lavender, refreshing peppermint, and sea water settling into warm sandalwood." },
+            { id: 9, name: "FBJ Ultra", inspired: "JPG Ultra Male", price: 1499, gender: "men", desc: "Intoxicating dark pear, spiced cinnamon, and smooth black vanilla with an energetic kick." },
+            { id: 10, name: "FBJ Code", inspired: "Armani Code", price: 1399, gender: "men", desc: "Sleek citrus notes merging into soft olive tree blossom, tonka bean, and fine leather." },
+            { id: 11, name: "FBJ Leather", inspired: "Tom Ford Tuscan Leather", price: 1499, gender: "men", desc: "Deep raw leather enriched with sweet wild raspberry, thyme, and golden saffron." },
+            { id: 12, name: "FBJ Oud", inspired: "Tom Ford Oud Wood", price: 1599, gender: "men", desc: "Rare smoky oud wood combined with Brazilian rosewood, cardamom, and vetiver." },
+            { id: 13, name: "FBJ Black", inspired: "YSL Black Opium", price: 1399, gender: "women", desc: "Addictive roasted coffee bean paired with soft white flowers and sensual vanilla." },
+            { id: 14, name: "FBJ Libre", inspired: "YSL Libre", price: 1399, gender: "women", desc: "Moroccan orange blossom intertwined with bold French lavender and sensual musk." },
+            { id: 15, name: "FBJ Good Girl", inspired: "Carolina Herrera Good Girl", price: 1399, gender: "women", desc: "Radiant tuberose and jasmine Sambac contrasted with dark roasted cocoa and tonka bean." },
+            { id: 16, name: "FBJ Bloom", inspired: "VS Bombshell", price: 1299, gender: "women", desc: "A sparkling cocktail of passion fruit, Shangri-la peony, and sweet vanilla orchid." },
+            { id: 17, name: "FBJ Flora", inspired: "Gucci Flora", price: 1399, gender: "women", desc: "Delicate peony and fresh rose notes layered over rare osmanthus and warm sandalwood." },
+            { id: 18, name: "FBJ Crystal", inspired: "Versace Bright Crystal", price: 1299, gender: "women", desc: "Chilled yuzu and juicy pomegranate blended with peony petals and lotus flower." },
+            { id: 19, name: "FBJ Burberry", inspired: "My Burberry", price: 1399, gender: "women", desc: "Sweet pea and bergamot opening into a rain-tipped floral heart of grandiflora rose." },
+            { id: 20, name: "FBJ Poison", inspired: "Dior Poison", price: 1399, gender: "women", desc: "Mysterious wild berries, coriander, and cinnamon melting into honeyed amber and opopanax." }
         ];
 
         let cart = JSON.parse(localStorage.getItem('fbjCart')) || [];
@@ -427,6 +414,7 @@ I have made the following updates specifically for you:
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-inspired">Inspired by ${p.inspired}</div>
+                        <div class="product-desc">${p.desc}</div>
                         <div class="product-bottom">
                             <div class="product-price">Rs. ${p.price.toLocaleString()}</div>
                             <button class="add-btn" onclick="addToCart(${p.id})">Add to Bag</button>
@@ -485,7 +473,7 @@ I have made the following updates specifically for you:
                     <div class="cart-item">
                         <div>
                             <div style="font-weight:600;font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);">${i.name}</div>
-                            <div style="font-size:0.75rem;color:#888;">Rs. ${i.price} x ${i.qty}</div>
+                            <div style="font-size:0.75rem;color:#888;">50ml EDP • Rs. ${i.price} x ${i.qty}</div>
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(201,168,76,0.3);padding:2px 5px;border-radius:3px;">
                             <button onclick="updateQty(${i.id}, -1)" style="width:24px;height:24px;background:transparent;color:var(--gold);border:none;cursor:pointer;font-size:1.2rem;">-</button>
@@ -530,7 +518,7 @@ I have made the following updates specifically for you:
             const total = subtotal + shipping;
             const itemsSummary = cart.map(i => `${i.name} (${i.qty}x)`).join(", ");
 
-            // Prepare URL parameters to bypass browser CORS issues
+            // Prepare URL parameters
             const queryParams = new URLSearchParams({
                 orderId: orderId,
                 name: document.getElementById('custName').value.trim(),
@@ -542,11 +530,10 @@ I have made the following updates specifically for you:
                 total: `Rs. ${total.toLocaleString()}`
             });
 
-            // The final URL containing the data
             const finalUrl = `${GOOGLE_SHEET_URL}?${queryParams.toString()}`;
 
             try {
-                // Send the data quietly in the background
+                // Send the data to your Google Sheet
                 await fetch(finalUrl, { mode: 'no-cors' });
             } catch (err) {
                 console.warn("Spreadsheet submission error:", err);
@@ -577,4 +564,3 @@ I have made the following updates specifically for you:
     </script>
 </body>
 </html>
-```
