@@ -213,7 +213,7 @@
         .footer-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 25px; font-family: 'Playfair Display', serif; }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 15px; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); font-size: 0.95rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: var(--transition); font-size: 0.95rem; cursor: pointer; }
         .footer-links a:hover { color: var(--gold); padding-left: 5px; }
         .footer-bottom { padding-top: 30px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.9rem; }
 
@@ -336,7 +336,8 @@
         <div class="container">
             <div class="about-grid">
                 <div class="about-image fade-up">
-                    <img src="https://images.unsplash.com/photo-1595425970377-c9703d740814?q=80&w=1000&auto=format&fit=crop" alt="Luxury Perfume Crafting">
+                    <!-- Corrected high-quality image link -->
+                    <img src="https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?q=80&w=1000&auto=format&fit=crop" alt="Luxury Perfume Crafting">
                 </div>
                 <div class="about-text fade-up">
                     <div class="badge">About Us</div>
@@ -464,7 +465,7 @@
                 <div class="contact-info fade-up">
                     <div class="badge">Get in Touch</div>
                     <h3>We're here to help.</h3>
-                    <p>Have questions about our fragrances, your order, or need a recommendation? Reach out to our dedicated support team.</p>
+                    <p>Have questions about our fragrances, your order, or need a recommendation? Send us a direct message and our team will reply on WhatsApp.</p>
                     
                     <div class="info-item">
                         <div class="info-icon">📍</div>
@@ -490,20 +491,21 @@
                 </div>
                 
                 <div class="contact-form fade-up">
-                    <form onsubmit="event.preventDefault(); showToast('Message sent! We will reply shortly.'); this.reset();">
+                    <!-- Updated Contact Form connected to WhatsApp -->
+                    <form id="contactForm" onsubmit="sendWhatsAppMessage(event)">
                         <div class="form-group">
                             <label>Complete Name</label>
-                            <input type="text" class="form-control" required placeholder="John Doe">
+                            <input type="text" id="contactName" class="form-control" required placeholder="John Doe">
                         </div>
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" class="form-control" required placeholder="john@example.com">
+                            <input type="email" id="contactEmail" class="form-control" required placeholder="john@example.com">
                         </div>
                         <div class="form-group">
                             <label>Your Message</label>
-                            <textarea class="form-control" required placeholder="How can we assist you?"></textarea>
+                            <textarea id="contactMessage" class="form-control" required placeholder="How can we assist you?"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send via WhatsApp</button>
                     </form>
                 </div>
             </div>
@@ -530,7 +532,7 @@
                 <div>
                     <h4 class="footer-title">Customer Care</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Track Order</a></li>
+                        <li><a href="javascript:void(0)" onclick="trackOrder()">Track Order</a></li>
                         <li><a href="#">Shipping Policy</a></li>
                         <li><a href="#">Return & Exchange</a></li>
                         <li><a href="#">FAQs</a></li>
@@ -696,6 +698,7 @@
 
         let cart = JSON.parse(localStorage.getItem('fbjCart')) || [];
         let currentFilter = 'all';
+        const WHATSAPP_NUM = "923444424122";
 
         // --- Init & Scroll Animations ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -718,6 +721,26 @@
             
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         });
+
+        // --- WhatsApp Track Order ---
+        function trackOrder() {
+            const message = encodeURIComponent("Hello FBJ Perfumes, I would like to track my recent order. My Order ID is: FBJ-");
+            window.open(`https://wa.me/${WHATSAPP_NUM}?text=${message}`, '_blank');
+        }
+
+        // --- WhatsApp Contact Form Submit ---
+        function sendWhatsAppMessage(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const msg = document.getElementById('contactMessage').value.trim();
+
+            const formattedMsg = encodeURIComponent(`*New Inquiry via Website*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Message:* ${msg}`);
+            window.open(`https://wa.me/${WHATSAPP_NUM}?text=${formattedMsg}`, '_blank');
+
+            document.getElementById('contactForm').reset();
+            showToast('Redirecting to WhatsApp...');
+        }
 
         // --- Search and Filter ---
         function handleSearch() {
