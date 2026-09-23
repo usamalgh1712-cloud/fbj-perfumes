@@ -47,8 +47,8 @@
 
         /* Hero */
         .hero {
-            min-height: 80vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 120px 20px 60px;
+            min-height: 75vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 120px 20px 40px;
             background: radial-gradient(circle at center, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
         }
         .hero-badge {
@@ -65,14 +65,28 @@
         }
 
         /* Section */
-        .section { padding: 80px 0; }
+        .section { padding: 50px 0 80px; }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
-        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header { text-align: center; margin-bottom: 30px; }
         .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--white); margin-bottom: 10px; }
         .section-subtitle { color: var(--gray); font-size: 0.95rem; }
 
+        /* Search Bar */
+        .search-container {
+            max-width: 600px; margin: 0 auto 30px; position: relative;
+        }
+        .search-input {
+            width: 100%; padding: 15px 20px 15px 45px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(201, 168, 76, 0.3); border-radius: 30px; color: var(--white);
+            font-family: 'Poppins', sans-serif; font-size: 0.95rem; outline: none; transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--gold); background: rgba(201, 168, 76, 0.05); }
+        .search-icon {
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--gray);
+        }
+
         /* Filters */
-        .filter-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; }
+        .filter-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
         .filter-tab {
             padding: 10px 25px; background: transparent; border: 1px solid rgba(201, 168, 76, 0.3);
             color: var(--gray); font-family: 'Poppins', sans-serif; font-size: 0.8rem; cursor: pointer; transition: 0.3s; border-radius: 20px;
@@ -84,7 +98,7 @@
         .product-card {
             background: var(--dark); border: 1px solid rgba(201, 168, 76, 0.12);
             border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.3s, border-color 0.3s; cursor: pointer;
         }
         .product-card:hover { transform: translateY(-5px); border-color: var(--gold); }
         
@@ -103,92 +117,93 @@
             padding: 4px 8px; background: rgba(255,255,255,0.1); color: var(--light-gray); border-radius: 3px; z-index: 5;
         }
 
-        .minimal-bottle-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .minimal-bottle-container { position: relative; display: flex; flex-direction: column; align-items: center; }
 
-        /* Glass Bottle */
         .minimal-bottle {
-            width: 70px;
-            height: 100px;
+            width: 70px; height: 100px;
             background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
-            border: 2px solid rgba(201, 168, 76, 0.5);
-            border-radius: 18px 18px 5px 5px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 0 10px 20px rgba(201, 168, 76, 0.1);
-            backdrop-filter: blur(2px);
+            border: 2px solid rgba(201, 168, 76, 0.5); border-radius: 18px 18px 5px 5px;
+            position: relative; display: flex; align-items: center; justify-content: center;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 0 10px 20px rgba(201, 168, 76, 0.1); backdrop-filter: blur(2px);
         }
-
-        /* Bottle Cap */
         .minimal-cap {
-            width: 24px;
-            height: 20px;
-            background: linear-gradient(to right, #e8d5a3, #c9a84c, #a07e2e);
-            border-radius: 3px 3px 0 0;
-            margin-bottom: 2px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            width: 24px; height: 20px; background: linear-gradient(to right, #e8d5a3, #c9a84c, #a07e2e);
+            border-radius: 3px 3px 0 0; margin-bottom: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
-
-        /* Bottle Label inside glass */
         .minimal-label {
-            width: 82%;
-            padding: 4px 0;
-            background: var(--darker);
-            border: 1px solid var(--gold);
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 0.55rem;
-            color: var(--gold);
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            width: 82%; padding: 4px 0; background: var(--darker); border: 1px solid var(--gold);
+            text-align: center; font-family: 'Playfair Display', serif; font-size: 0.55rem; color: var(--gold); text-transform: uppercase;
         }
 
         /* Floating Flowers */
-        .flowers {
-            position: absolute;
-            font-size: 1.5rem;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
-            z-index: 3;
-        }
+        .flowers { position: absolute; font-size: 1.5rem; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); z-index: 3; }
         .f1 { top: -15px; left: -28px; animation: float 3s ease-in-out infinite; }
         .f2 { bottom: 10px; right: -28px; animation: float 4s ease-in-out infinite reverse; font-size: 1.3rem; }
         .f3 { top: 35px; right: -22px; animation: float 3.5s ease-in-out infinite; font-size: 1.1rem; }
         .f4 { bottom: -10px; left: -12px; animation: float 4.5s ease-in-out infinite; font-size: 0.9rem; }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
         .product-info { padding: 20px; flex: 1; display: flex; flex-direction: column; }
         .product-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 2px; }
         .product-inspired { font-size: 0.75rem; color: var(--gold-light); margin-bottom: 10px; font-style: italic; }
-        .product-desc { font-size: 0.78rem; color: #b8b8b8; line-height: 1.55; margin-bottom: 18px; font-weight: 300; }
+        .product-desc { font-size: 0.78rem; color: #b8b8b8; line-height: 1.55; margin-bottom: 18px; font-weight: 300; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .product-bottom { margin-top: auto; display: flex; align-items: center; justify-content: space-between; pt-2; }
         .product-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); }
         .add-btn {
             padding: 10px 18px; background: var(--gold); color: var(--black); border: none;
-            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; border-radius: 3px;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; border-radius: 3px; z-index: 10;
         }
         .add-btn:hover { background: var(--white); }
 
-        /* Cart Sidebar */
-        .cart-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 9998; opacity: 0; visibility: hidden; transition: 0.3s;
+        /* Full Screen Product Page Overlay */
+        .product-page-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black);
+            z-index: 10000; overflow-y: auto; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            visibility: hidden;
         }
+        .product-page-overlay.open { transform: translateX(0); visibility: visible; }
+        
+        .pp-header { padding: 20px 30px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.1); position: sticky; top: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); z-index: 10; }
+        .pp-back { color: var(--gold); cursor: pointer; font-size: 1rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .pp-back:hover { color: var(--white); }
+        
+        .pp-content { max-width: 1200px; margin: 0 auto; padding: 40px 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .pp-image-container { background: var(--dark); border-radius: 8px; height: 500px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden;}
+        
+        /* Scaled up bottle for product page */
+        .pp-image-container .minimal-bottle { width: 140px; height: 200px; border-radius: 36px 36px 10px 10px; border-width: 3px; }
+        .pp-image-container .minimal-cap { width: 48px; height: 40px; margin-bottom: 4px;}
+        .pp-image-container .minimal-label { font-size: 0.9rem; padding: 8px 0; }
+        .pp-image-container .flowers { font-size: 3rem; }
+        
+        .pp-details { display: flex; flex-direction: column; justify-content: center; }
+        .pp-title { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--white); margin-bottom: 5px; }
+        .pp-inspired { font-size: 1rem; color: var(--gold); font-style: italic; margin-bottom: 20px; }
+        .pp-price { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 30px; }
+        .pp-desc { font-size: 0.95rem; color: var(--light-gray); line-height: 1.8; margin-bottom: 25px; }
+        
+        .pp-notes { background: rgba(201,168,76,0.05); padding: 20px; border-left: 3px solid var(--gold); margin-bottom: 30px; border-radius: 0 4px 4px 0; }
+        .pp-notes h4 { color: var(--gold); margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .pp-notes p { color: var(--light-gray); font-size: 0.85rem; line-height: 1.6; }
+
+        .pp-actions { display: flex; gap: 15px; margin-top: 10px; }
+        .btn-buy-now { flex: 1; padding: 18px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--black); border: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .btn-buy-now:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(201,168,76,0.3); }
+        .btn-add-bag { padding: 18px 30px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .btn-add-bag:hover { background: var(--gold); color: var(--black); }
+
+        @media (max-width: 768px) {
+            .pp-content { grid-template-columns: 1fr; gap: 30px; padding: 20px; }
+            .pp-image-container { height: 350px; }
+            .pp-title { font-size: 2.2rem; }
+            .pp-actions { flex-direction: column; }
+        }
+
+        /* Cart Sidebar & Checkouts (Same as before) */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10001; opacity: 0; visibility: hidden; transition: 0.3s; }
         .cart-overlay.open { opacity: 1; visibility: visible; }
-        .cart-sidebar {
-            position: fixed; top: 0; right: -420px; width: 400px; max-width: 100%; height: 100%;
-            background: var(--darker); z-index: 9999; transition: right 0.4s ease; display: flex; flex-direction: column;
-            border-left: 1px solid rgba(201, 168, 76, 0.2);
-        }
+        .cart-sidebar { position: fixed; top: 0; right: -420px; width: 400px; max-width: 100%; height: 100%; background: var(--darker); z-index: 10002; transition: right 0.4s ease; display: flex; flex-direction: column; border-left: 1px solid rgba(201, 168, 76, 0.2); }
         .cart-sidebar.open { right: 0; }
         .cart-header { padding: 20px 25px; border-bottom: 1px solid rgba(201, 168, 76, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .cart-items { flex: 1; overflow-y: auto; padding: 20px 25px; }
@@ -197,40 +212,20 @@
         .cart-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--light-gray); }
 
         /* Modal */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
-            z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10003; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; }
         .modal-overlay.open { opacity: 1; visibility: visible; }
         .modal { background: var(--darker); border: 1px solid rgba(201, 168, 76, 0.25); width: 100%; max-width: 550px; max-height: 90vh; overflow-y: auto; padding: 30px; border-radius: 8px; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
         .form-input { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(201, 168, 76, 0.2); color: white; outline: none; border-radius: 4px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-        .submit-btn {
-            width: 100%; padding: 16px; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--black); font-weight: 700; text-transform: uppercase; border: none; cursor: pointer; margin-top: 15px; border-radius: 4px;
-        }
-        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        /* Toast */
-        .toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: var(--dark); border: 1px solid var(--gold); padding: 12px 25px; z-index: 99999;
-            transition: 0.4s; font-size: 0.85rem; color: var(--white); border-radius: 30px;
-        }
+        .submit-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--black); font-weight: 700; text-transform: uppercase; border: none; cursor: pointer; margin-top: 15px; border-radius: 4px; }
+        
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--dark); border: 1px solid var(--gold); padding: 12px 25px; z-index: 10005; transition: 0.4s; font-size: 0.85rem; color: var(--white); border-radius: 30px; }
         .toast.show { transform: translateX(-50%) translateY(0); }
-
-        /* WhatsApp Floating Button */
-        .whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px;
-            background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            z-index: 997; box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4); text-decoration: none; transition: 0.3s;
-        }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 997; box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4); text-decoration: none; transition: 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); }
         .whatsapp-float svg { width: 30px; height: 30px; fill: white; }
-
     </style>
 </head>
 <body>
@@ -256,15 +251,21 @@
         </div>
     </section>
 
-    <!-- Collection -->
+    <!-- Collection & Search -->
     <section class="section" id="collection">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">The Fragrance Lineup</h2>
-                <p class="section-subtitle">Select your favourite scent to place your order (All bottles are 50ml EDP)</p>
+                <p class="section-subtitle">Find your signature scent below</p>
             </div>
 
-            <div class="filter-tabs">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by perfume name or inspired brand..." oninput="handleSearch()">
+            </div>
+
+            <div class="filter-tabs" id="filterTabs">
                 <button class="filter-tab active" onclick="filterScents('all')">All Scents</button>
                 <button class="filter-tab" onclick="filterScents('men')">For Him</button>
                 <button class="filter-tab" onclick="filterScents('women')">For Her</button>
@@ -274,7 +275,20 @@
         </div>
     </section>
 
-    <!-- Cart Sidebar -->
+    <!-- Full Screen Product Page Overlay -->
+    <div id="productPage" class="product-page-overlay">
+        <div class="pp-header">
+            <div class="pp-back" onclick="closeProductPage()">← Back to Collection</div>
+            <div class="cart-icon" onclick="toggleCart()">
+                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+        </div>
+        <div class="pp-content" id="ppContent">
+            <!-- Dynamic Content Injected Here -->
+        </div>
+    </div>
+
+    <!-- Cart Sidebar & Checkouts -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
@@ -306,11 +320,11 @@
                     <input type="text" id="custName" class="form-input" placeholder="e.g. Ali Ahmed" required>
                 </div>
                 <div class="form-group">
-                    <label>Active Phone / WhatsApp Number *</label>
+                    <label>Phone / WhatsApp Number *</label>
                     <input type="tel" id="custPhone" class="form-input" placeholder="03XXXXXXXXX" required>
                 </div>
                 <div class="form-group">
-                    <label>Delivery Address *</label>
+                    <label>Complete Delivery Address *</label>
                     <input type="text" id="custAddress" class="form-input" placeholder="House #, Street #, Area" required>
                 </div>
                 <div class="form-row">
@@ -339,7 +353,7 @@
             <div style="font-size:3.5rem;color:var(--success);margin-bottom:10px;">✓</div>
             <h2 style="font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:10px;font-size:2rem;">Order Received!</h2>
             <p id="successOrderId" style="color:var(--gray);font-size:0.9rem;margin-bottom:15px;letter-spacing:1px;"></p>
-            <p style="font-size:0.95rem;color:var(--light-gray);margin-bottom:30px;line-height:1.6;">Thank you! Your order has been securely saved in our database. Our team will prepare your parcel for dispatch shortly.</p>
+            <p style="font-size:0.95rem;color:var(--light-gray);margin-bottom:30px;line-height:1.6;">Thank you! Your order has been securely saved. Our team will dispatch your parcel shortly.</p>
             <button class="btn-primary" onclick="closeSuccess()">Continue Browsing</button>
         </div>
     </div>
@@ -353,63 +367,93 @@
     </a>
 
     <script>
-        // =========================================================================
-        // YOUR EXACT GOOGLE SHEET SCRIPT URL
-        // =========================================================================
+        // GOOGLE SHEET URL
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyHFaXuIhyeiZglAJnjdMonYJyikylDUcMtb4_PXKsiUZ46hdUJLxvAYRo7-ESHopt81Q/exec";
 
-        // Perfume Catalog with 50ml pricing and custom fragrance descriptions
+        // Catalog with extended notes
         const catalog = [
-            { id: 1, name: "FBJ Avent", inspired: "Creed Aventus", price: 1499, gender: "men", desc: "Opens with a vibrant burst of fruit and citrus before settling into a rich, smoky, and woody base." },
-            { id: 2, name: "FBJ Sauvage", inspired: "Dior Sauvage", price: 1499, gender: "men", desc: "Radiates fresh Calabrian bergamot spiked with Sichuan pepper and warm, woody ambroxan." },
-            { id: 3, name: "FBJ Bleu", inspired: "Bleu de Chanel", price: 1499, gender: "men", desc: "A sophisticated fusion of crisp citrus, rich cedarwood, and aromatic sandalwood notes." },
-            { id: 4, name: "FBJ Aqua", inspired: "Acqua di Giò", price: 1399, gender: "men", desc: "Fresh aquatic sea spray balanced with sweet jasmine, rosemary, and warm cedarwood." },
-            { id: 5, name: "FBJ Million", inspired: "Paco Rabanne 1 Million", price: 1399, gender: "men", desc: "An intoxicating blend of spicy cinnamon, blood mandarin, and rich leather accord." },
-            { id: 6, name: "FBJ Invict", inspired: "Paco Rabanne Invictus", price: 1399, gender: "men", desc: "Vibrant grapefruit and marine notes layered over aromatic bay leaf and guaiac wood." },
-            { id: 7, name: "FBJ Eros", inspired: "Versace Eros", price: 1399, gender: "men", desc: "Vibrant mint leaf and lemon zest complemented by warm tonka bean and sweet vanilla." },
-            { id: 8, name: "FBJ Cool", inspired: "Davidoff Cool Water", price: 1299, gender: "men", desc: "Crisp lavender, refreshing peppermint, and sea water settling into warm sandalwood." },
-            { id: 9, name: "FBJ Ultra", inspired: "JPG Ultra Male", price: 1499, gender: "men", desc: "Intoxicating dark pear, spiced cinnamon, and smooth black vanilla with an energetic kick." },
-            { id: 10, name: "FBJ Code", inspired: "Armani Code", price: 1399, gender: "men", desc: "Sleek citrus notes merging into soft olive tree blossom, tonka bean, and fine leather." },
-            { id: 11, name: "FBJ Leather", inspired: "Tom Ford Tuscan Leather", price: 1499, gender: "men", desc: "Deep raw leather enriched with sweet wild raspberry, thyme, and golden saffron." },
-            { id: 12, name: "FBJ Oud", inspired: "Tom Ford Oud Wood", price: 1599, gender: "men", desc: "Rare smoky oud wood combined with Brazilian rosewood, cardamom, and vetiver." },
-            { id: 13, name: "FBJ Black", inspired: "YSL Black Opium", price: 1399, gender: "women", desc: "Addictive roasted coffee bean paired with soft white flowers and sensual vanilla." },
-            { id: 14, name: "FBJ Libre", inspired: "YSL Libre", price: 1399, gender: "women", desc: "Moroccan orange blossom intertwined with bold French lavender and sensual musk." },
-            { id: 15, name: "FBJ Good Girl", inspired: "Carolina Herrera Good Girl", price: 1399, gender: "women", desc: "Radiant tuberose and jasmine Sambac contrasted with dark roasted cocoa and tonka bean." },
-            { id: 16, name: "FBJ Bloom", inspired: "VS Bombshell", price: 1299, gender: "women", desc: "A sparkling cocktail of passion fruit, Shangri-la peony, and sweet vanilla orchid." },
-            { id: 17, name: "FBJ Flora", inspired: "Gucci Flora", price: 1399, gender: "women", desc: "Delicate peony and fresh rose notes layered over rare osmanthus and warm sandalwood." },
-            { id: 18, name: "FBJ Crystal", inspired: "Versace Bright Crystal", price: 1299, gender: "women", desc: "Chilled yuzu and juicy pomegranate blended with peony petals and lotus flower." },
-            { id: 19, name: "FBJ Burberry", inspired: "My Burberry", price: 1399, gender: "women", desc: "Sweet pea and bergamot opening into a rain-tipped floral heart of grandiflora rose." },
-            { id: 20, name: "FBJ Poison", inspired: "Dior Poison", price: 1399, gender: "women", desc: "Mysterious wild berries, coriander, and cinnamon melting into honeyed amber and opopanax." }
+            { id: 1, name: "FBJ Avent", inspired: "Creed Aventus", price: 1499, gender: "men", notes: "Top: Pineapple, Bergamot, Apple. Heart: Birch, Patchouli, Jasmine. Base: Musk, Oakmoss, Vanilla.", desc: "Opens with a vibrant burst of fruit and citrus before settling into a rich, smoky, and woody base." },
+            { id: 2, name: "FBJ Sauvage", inspired: "Dior Sauvage", price: 1499, gender: "men", notes: "Top: Calabrian Bergamot, Pepper. Heart: Sichuan Pepper, Lavender, Vetiver. Base: Ambroxan, Cedar.", desc: "Radiates fresh Calabrian bergamot spiked with Sichuan pepper and warm, woody ambroxan." },
+            { id: 3, name: "FBJ Bleu", inspired: "Bleu de Chanel", price: 1499, gender: "men", notes: "Top: Grapefruit, Lemon, Mint. Heart: Ginger, Nutmeg, Jasmine. Base: Incense, Vetiver, Sandalwood.", desc: "A sophisticated fusion of crisp citrus, rich cedarwood, and aromatic sandalwood notes." },
+            { id: 4, name: "FBJ Aqua", inspired: "Acqua di Giò", price: 1399, gender: "men", notes: "Top: Lime, Lemon, Bergamot. Heart: Sea Notes, Jasmine, Rosemary. Base: White Musk, Cedar, Patchouli.", desc: "Fresh aquatic sea spray balanced with sweet jasmine, rosemary, and warm cedarwood." },
+            { id: 5, name: "FBJ Million", inspired: "Paco Rabanne 1 Million", price: 1399, gender: "men", notes: "Top: Blood Mandarin, Grapefruit. Heart: Cinnamon, Spicy Notes, Rose. Base: Amber, Leather, Indian Patchouli.", desc: "An intoxicating blend of spicy cinnamon, blood mandarin, and rich leather accord." },
+            { id: 6, name: "FBJ Invict", inspired: "Paco Rabanne Invictus", price: 1399, gender: "men", notes: "Top: Sea Notes, Grapefruit. Heart: Bay Leaf, Jasmine. Base: Ambergris, Guaiac Wood, Oakmoss.", desc: "Vibrant grapefruit and marine notes layered over aromatic bay leaf and guaiac wood." },
+            { id: 7, name: "FBJ Eros", inspired: "Versace Eros", price: 1399, gender: "men", notes: "Top: Mint, Green Apple, Lemon. Heart: Tonka Bean, Ambroxan, Geranium. Base: Madagascar Vanilla, Cedar.", desc: "Vibrant mint leaf and lemon zest complemented by warm tonka bean and sweet vanilla." },
+            { id: 8, name: "FBJ Cool", inspired: "Davidoff Cool Water", price: 1299, gender: "men", notes: "Top: Sea Water, Lavender, Mint. Heart: Sandalwood, Jasmine, Neroli. Base: Musk, Vetiver, Cedar.", desc: "Crisp lavender, refreshing peppermint, and sea water settling into warm sandalwood." },
+            { id: 9, name: "FBJ Ultra", inspired: "JPG Ultra Male", price: 1499, gender: "men", notes: "Top: Pear, Lavender, Mint. Heart: Cinnamon, Clary Sage. Base: Black Vanilla Husk, Amber, Patchouli.", desc: "Intoxicating dark pear, spiced cinnamon, and smooth black vanilla with an energetic kick." },
+            { id: 10, name: "FBJ Code", inspired: "Armani Code", price: 1399, gender: "men", notes: "Top: Lemon, Bergamot. Heart: Star Anise, Olive Blossom. Base: Leather, Tonka Bean, Tobacco.", desc: "Sleek citrus notes merging into soft olive tree blossom, tonka bean, and fine leather." },
+            { id: 11, name: "FBJ Leather", inspired: "Tom Ford Tuscan Leather", price: 1499, gender: "men", notes: "Top: Saffron, Raspberry, Thyme. Heart: Olibanum, Jasmine. Base: Leather, Suede, Amber.", desc: "Deep raw leather enriched with sweet wild raspberry, thyme, and golden saffron." },
+            { id: 12, name: "FBJ Oud", inspired: "Tom Ford Oud Wood", price: 1599, gender: "men", notes: "Top: Rosewood, Cardamom. Heart: Oud Wood, Sandalwood, Vetiver. Base: Tonka Bean, Vanilla, Amber.", desc: "Rare smoky oud wood combined with Brazilian rosewood, cardamom, and vetiver." },
+            { id: 13, name: "FBJ Black", inspired: "YSL Black Opium", price: 1399, gender: "women", notes: "Top: Pear, Pink Pepper. Heart: Coffee, Jasmine, Bitter Almond. Base: Vanilla, Patchouli, Cedar.", desc: "Addictive roasted coffee bean paired with soft white flowers and sensual vanilla." },
+            { id: 14, name: "FBJ Libre", inspired: "YSL Libre", price: 1399, gender: "women", notes: "Top: Lavender, Mandarin Orange. Heart: Orange Blossom, Jasmine. Base: Madagascar Vanilla, Musk.", desc: "Moroccan orange blossom intertwined with bold French lavender and sensual musk." },
+            { id: 15, name: "FBJ Good Girl", inspired: "Carolina Herrera Good Girl", price: 1399, gender: "women", notes: "Top: Almond, Coffee. Heart: Tuberose, Jasmine Sambac. Base: Tonka Bean, Cacao, Vanilla.", desc: "Radiant tuberose and jasmine Sambac contrasted with dark roasted cocoa and tonka bean." },
+            { id: 16, name: "FBJ Bloom", inspired: "VS Bombshell", price: 1299, gender: "women", notes: "Top: Passionfruit, Grapefruit. Heart: Peony, Vanilla Orchid. Base: Musk, Woods, Oakmoss.", desc: "A sparkling cocktail of passion fruit, Shangri-la peony, and sweet vanilla orchid." },
+            { id: 17, name: "FBJ Flora", inspired: "Gucci Flora", price: 1399, gender: "women", notes: "Top: Peony, Citrus. Heart: Osmanthus, Rose. Base: Sandalwood, Patchouli, Pink Pepper.", desc: "Delicate peony and fresh rose notes layered over rare osmanthus and warm sandalwood." },
+            { id: 18, name: "FBJ Crystal", inspired: "Versace Bright Crystal", price: 1299, gender: "women", notes: "Top: Yuzu, Pomegranate. Heart: Peony, Lotus, Magnolia. Base: Musk, Mahogany, Amber.", desc: "Chilled yuzu and juicy pomegranate blended with peony petals and lotus flower." },
+            { id: 19, name: "FBJ Burberry", inspired: "My Burberry", price: 1399, gender: "women", notes: "Top: Sweet Pea, Bergamot. Heart: Geranium, Freesia, Quince. Base: Patchouli, Damask Rose.", desc: "Sweet pea and bergamot opening into a rain-tipped floral heart of grandiflora rose." },
+            { id: 20, name: "FBJ Poison", inspired: "Dior Poison", price: 1399, gender: "women", notes: "Top: Plum, Wild Berries, Coriander. Heart: Tuberose, Incense, Honey. Base: Vanilla, Amber, Sandalwood.", desc: "Mysterious wild berries, coriander, and cinnamon melting into honeyed amber and opopanax." }
         ];
 
         let cart = JSON.parse(localStorage.getItem('fbjCart')) || [];
+        let currentFilter = 'all';
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderGrid('all');
+            renderGrid(catalog);
             updateCart();
         });
 
-        function renderGrid(filter) {
+        // --- Search and Filter Logic ---
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Remove active state from filter tabs while searching
+            if(query !== "") {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            } else {
+                document.querySelectorAll('.filter-tab')[0].classList.add('active'); // default to all
+                currentFilter = 'all';
+            }
+
+            const filtered = catalog.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(query) || p.inspired.toLowerCase().includes(query);
+                const matchesTab = currentFilter === 'all' ? true : p.gender === currentFilter;
+                return query !== "" ? matchesSearch : matchesTab;
+            });
+            renderGrid(filtered);
+        }
+
+        function filterScents(gender) {
+            document.getElementById('searchInput').value = ""; // Clear search
+            currentFilter = gender;
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const filtered = gender === 'all' ? catalog : catalog.filter(p => p.gender === gender);
+            renderGrid(filtered);
+        }
+
+        function renderGrid(dataArray) {
             const grid = document.getElementById('productsGrid');
-            const filtered = filter === 'all' ? catalog : catalog.filter(p => p.gender === filter);
-            grid.innerHTML = filtered.map(p => `
-                <div class="product-card">
+            if (dataArray.length === 0) {
+                grid.innerHTML = `<p style="color:var(--gray); text-align:center; grid-column: 1/-1;">No perfumes found matching your search.</p>`;
+                return;
+            }
+
+            grid.innerHTML = dataArray.map(p => `
+                <div class="product-card" onclick="openProductPage(${p.id})">
                     <div class="product-image">
                         <span class="product-tag">${p.gender === 'men' ? '♂ For Him' : '♀ For Her'}</span>
                         <span class="product-size">50ml</span>
-                        
                         <div class="minimal-bottle-container">
                             <span class="flowers f1">${p.gender === 'men' ? '🌿' : '🌸'}</span>
                             <span class="flowers f2">${p.gender === 'men' ? '🍂' : '🌺'}</span>
                             <span class="flowers f3">${p.gender === 'men' ? '✨' : '🌼'}</span>
                             <span class="flowers f4">${p.gender === 'men' ? '🌱' : '✨'}</span>
-
                             <div class="minimal-cap"></div>
                             <div class="minimal-bottle">
                                 <div class="minimal-label">${p.name.replace('FBJ ', '')}</div>
                             </div>
                         </div>
-
                     </div>
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
@@ -417,19 +461,67 @@
                         <div class="product-desc">${p.desc}</div>
                         <div class="product-bottom">
                             <div class="product-price">Rs. ${p.price.toLocaleString()}</div>
-                            <button class="add-btn" onclick="addToCart(${p.id})">Add to Bag</button>
+                            <button class="add-btn" onclick="event.stopPropagation(); addToCart(${p.id});">Add to Bag</button>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function filterScents(gender) {
-            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            renderGrid(gender);
+        // --- Product Page Logic ---
+        function openProductPage(id) {
+            const p = catalog.find(x => x.id === id);
+            const container = document.getElementById('ppContent');
+            
+            container.innerHTML = `
+                <div class="pp-image-container">
+                    <span class="product-tag" style="top:20px;left:20px;font-size:0.8rem;">${p.gender === 'men' ? '♂ For Him' : '♀ For Her'}</span>
+                    <span class="product-size" style="top:20px;right:20px;font-size:0.8rem;">50ml EDP</span>
+                    <div class="minimal-bottle-container">
+                        <span class="flowers f1" style="left:-50px; top:-30px;">${p.gender === 'men' ? '🌿' : '🌸'}</span>
+                        <span class="flowers f2" style="right:-50px; bottom: 20px;">${p.gender === 'men' ? '🍂' : '🌺'}</span>
+                        <span class="flowers f3" style="right:-40px; top: 60px;">${p.gender === 'men' ? '✨' : '🌼'}</span>
+                        <span class="flowers f4" style="left:-30px; bottom:-20px;">${p.gender === 'men' ? '🌱' : '✨'}</span>
+                        <div class="minimal-cap"></div>
+                        <div class="minimal-bottle">
+                            <div class="minimal-label" style="font-size:0.8rem; padding: 8px 0;">${p.name.replace('FBJ ', '')}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pp-details">
+                    <h1 class="pp-title">${p.name}</h1>
+                    <div class="pp-inspired">High-quality inspiration of <strong>${p.inspired}</strong></div>
+                    <div class="pp-price">Rs. ${p.price.toLocaleString()}</div>
+                    <p class="pp-desc">${p.desc} Our 50ml Eau De Parfum guarantees 8+ hours of projection and similarity that captures the pure essence of the original designer scent.</p>
+                    
+                    <div class="pp-notes">
+                        <h4>Fragrance Notes</h4>
+                        <p>${p.notes.replace(/Top:|Heart:|Base:/g, match => `<strong>${match}</strong><br>`)}</p>
+                    </div>
+
+                    <div class="pp-actions">
+                        <button class="btn-add-bag" onclick="addToCart(${p.id})">Add to Bag</button>
+                        <button class="btn-buy-now" onclick="buyNow(${p.id})">Buy Now (COD)</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('productPage').classList.add('open');
+            document.body.style.overflow = "hidden"; // Prevent background scrolling
         }
 
+        function closeProductPage() {
+            document.getElementById('productPage').classList.remove('open');
+            document.body.style.overflow = "auto";
+        }
+
+        function buyNow(id) {
+            addToCart(id);
+            closeProductPage();
+            openCheckout();
+        }
+
+        // --- Cart Logic ---
         function addToCart(id) {
             const item = catalog.find(p => p.id === id);
             const exist = cart.find(p => p.id === id);
@@ -495,17 +587,17 @@
         }
 
         function openCheckout() {
-            toggleCart();
+            if(document.getElementById('cartSidebar').classList.contains('open')) toggleCart();
             document.getElementById('checkoutModal').classList.add('open');
+            document.body.style.overflow = "hidden";
         }
 
         function closeCheckout() {
             document.getElementById('checkoutModal').classList.remove('open');
+            document.body.style.overflow = "auto";
         }
 
-        // =========================================================================
-        // AUTOMATIC ORDER SUBMISSION TO GOOGLE SPREADSHEET VIA GET REQUEST
-        // =========================================================================
+        // --- Database Submission ---
         async function submitOrderToDatabase(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -518,7 +610,6 @@
             const total = subtotal + shipping;
             const itemsSummary = cart.map(i => `${i.name} (${i.qty}x)`).join(", ");
 
-            // Prepare URL parameters
             const queryParams = new URLSearchParams({
                 orderId: orderId,
                 name: document.getElementById('custName').value.trim(),
@@ -533,13 +624,11 @@
             const finalUrl = `${GOOGLE_SHEET_URL}?${queryParams.toString()}`;
 
             try {
-                // Send the data to your Google Sheet
                 await fetch(finalUrl, { mode: 'no-cors' });
             } catch (err) {
                 console.warn("Spreadsheet submission error:", err);
             }
 
-            // Finish and show success to user instantly
             closeCheckout();
             document.getElementById('successOrderId').textContent = `Order ID: #${orderId}`;
             document.getElementById('successModal').classList.add('open');
@@ -553,6 +642,7 @@
 
         function closeSuccess() {
             document.getElementById('successModal').classList.remove('open');
+            document.body.style.overflow = "auto";
         }
 
         function showToast(msg) {
