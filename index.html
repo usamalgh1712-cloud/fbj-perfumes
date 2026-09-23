@@ -1,237 +1,307 @@
+Here is your complete, updated website code. 
+
+I have added the **Payment Method Selector (JazzCash & COD)** in the checkout page, updated the **Free Delivery threshold to Rs. 3500**, and ensured the payment method you receive in your Google Sheet shows exactly how the customer chose to pay.
+
+### **Copy & Paste this into your `index.html`:**
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FBJ Perfumes | Premium Fragrances</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>FBJ Perfumes | Luxury Inspired Fragrances</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #c9a84c;
-            --gold-light: #e8d5a3;
-            --gold-dark: #a07e2e;
-            --black: #0a0a0a;
-            --dark: #141414;
-            --darker: #0d0d0d;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #996515;
+            --black: #050505;
+            --dark: #0a0a0a;
+            --darker: #000000;
             --white: #ffffff;
-            --gray: #888888;
-            --light-gray: #cccccc;
+            --gray: #999999;
+            --light-gray: #e0e0e0;
             --success: #25D366;
             --danger: #e74c3c;
+            --glass: rgba(15, 15, 15, 0.7);
+            --glass-border: rgba(212, 175, 55, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Poppins', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+        
+        ::selection { background: var(--gold); color: var(--black); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+
+        /* Welcome Overlay */
+        .welcome-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+            z-index: 100000; display: flex; align-items: center; justify-content: center;
+            opacity: 1; visibility: visible; transition: 0.8s ease-in-out;
+        }
+        .welcome-overlay.hidden { opacity: 0; visibility: hidden; }
+        .welcome-box {
+            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,0.95));
+            border: 1px solid var(--gold); padding: 50px 40px; text-align: center;
+            max-width: 500px; border-radius: 2px; box-shadow: 0 0 50px rgba(212, 175, 55, 0.15);
+            transform: translateY(0); transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .welcome-overlay.hidden .welcome-box { transform: translateY(-50px); }
+        .welcome-logo { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 10px; letter-spacing: 4px; }
+        .welcome-subtitle { font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 30px; }
+        .welcome-text { font-size: 0.95rem; color: var(--light-gray); line-height: 1.8; margin-bottom: 35px; font-weight: 300; }
+        .btn-enter {
+            padding: 15px 40px; background: transparent; color: var(--gold); border: 1px solid var(--gold);
+            font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 3px;
+            text-transform: uppercase; cursor: pointer; transition: 0.4s;
+        }
+        .btn-enter:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
 
         /* Header */
         .header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px);
-            padding: 15px 0; border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
+            padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s;
         }
-        .nav-container {
-            max-width: 1300px; margin: 0 auto; padding: 0 30px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; color: var(--gold); text-decoration: none; letter-spacing: 3px; }
-        .logo span { font-size: 0.55em; display: block; letter-spacing: 6px; font-family: 'Poppins', sans-serif; color: var(--gold-light); }
+        .header.scrolled { padding: 12px 0; border-bottom: 1px solid var(--glass-border); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+        .nav-container { max-width: 1300px; margin: 0 auto; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: 2px; }
+        .logo span { font-size: 0.5em; display: block; letter-spacing: 8px; font-family: 'Poppins', sans-serif; color: var(--white); margin-top: -2px; font-weight: 300; }
 
-        .cart-icon { position: relative; cursor: pointer; padding: 8px; }
-        .cart-icon svg { width: 26px; height: 26px; fill: var(--gold); }
+        .cart-icon { position: relative; cursor: pointer; padding: 8px; transition: 0.3s; }
+        .cart-icon:hover { transform: scale(1.1); }
+        .cart-icon svg { width: 24px; height: 24px; fill: var(--white); transition: 0.3s; }
+        .cart-icon:hover svg { fill: var(--gold); }
         .cart-badge {
-            position: absolute; top: 2px; right: 2px; background: var(--danger);
-            color: white; font-size: 0.65rem; width: 18px; height: 18px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;
+            position: absolute; top: 0px; right: 0px; background: var(--gold);
+            color: var(--black); font-size: 0.65rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;
         }
 
         /* Hero */
         .hero {
-            min-height: 75vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 120px 20px 40px;
-            background: radial-gradient(circle at center, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+            min-height: 85vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 120px 20px 40px; position: relative;
+            background: radial-gradient(circle at 50% 40%, rgba(212, 175, 55, 0.08) 0%, var(--black) 70%);
         }
+        .hero::after { content: ''; position: absolute; width: 300px; height: 300px; background: var(--gold); filter: blur(150px); opacity: 0.1; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; }
         .hero-badge {
-            display: inline-block; padding: 6px 20px; border: 1px solid var(--gold);
-            font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+            display: inline-block; padding: 6px 20px; border: 1px solid rgba(212, 175, 55, 0.4);
+            font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 25px; border-radius: 30px;
         }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; line-height: 1.15; margin-bottom: 15px; }
-        .hero-title span { color: var(--gold); font-style: italic; }
-        .hero-desc { color: var(--light-gray); max-width: 550px; margin: 0 auto 30px; font-size: 0.95rem; line-height: 1.7; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 600; line-height: 1.1; margin-bottom: 20px; }
+        .hero-title span { color: var(--gold); font-style: italic; font-weight: 400; }
+        .hero-desc { color: var(--gray); max-width: 500px; margin: 0 auto 40px; font-size: 1rem; line-height: 1.8; font-weight: 300; }
         .btn-primary {
-            padding: 14px 40px; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--black); text-decoration: none; font-size: 0.85rem; font-weight: 700;
-            letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; display: inline-block; border-radius: 3px;
+            padding: 16px 45px; background: var(--gold); color: var(--black);
+            text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; cursor: pointer; display: inline-block; transition: 0.4s;
         }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); }
 
         /* Section */
-        .section { padding: 50px 0 80px; }
+        .section { padding: 50px 0 100px; }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
-        .section-header { text-align: center; margin-bottom: 30px; }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--white); margin-bottom: 10px; }
-        .section-subtitle { color: var(--gray); font-size: 0.95rem; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--white); margin-bottom: 10px; font-weight: 600; }
+        .section-subtitle { color: var(--gold); font-size: 0.9rem; font-style: italic; letter-spacing: 1px; }
 
         /* Search Bar */
-        .search-container {
-            max-width: 600px; margin: 0 auto 30px; position: relative;
-        }
+        .search-container { max-width: 500px; margin: 0 auto 40px; position: relative; }
         .search-input {
-            width: 100%; padding: 15px 20px 15px 45px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(201, 168, 76, 0.3); border-radius: 30px; color: var(--white);
+            width: 100%; padding: 16px 20px 16px 50px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; color: var(--white);
             font-family: 'Poppins', sans-serif; font-size: 0.95rem; outline: none; transition: 0.3s;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
         }
-        .search-input:focus { border-color: var(--gold); background: rgba(201, 168, 76, 0.05); }
-        .search-icon {
-            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--gray);
-        }
+        .search-input:focus { border-color: var(--gold); background: rgba(212, 175, 55, 0.03); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; color: var(--gold); }
 
         /* Filters */
-        .filter-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 50px; flex-wrap: wrap; }
         .filter-tab {
-            padding: 10px 25px; background: transparent; border: 1px solid rgba(201, 168, 76, 0.3);
-            color: var(--gray); font-family: 'Poppins', sans-serif; font-size: 0.8rem; cursor: pointer; transition: 0.3s; border-radius: 20px;
+            padding: 10px 30px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray); font-family: 'Poppins', sans-serif; font-size: 0.8rem; letter-spacing: 1px; cursor: pointer; transition: 0.3s; border-radius: 30px; text-transform: uppercase;
         }
-        .filter-tab.active, .filter-tab:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        .filter-tab.active, .filter-tab:hover { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 500; }
 
         /* Products Grid */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
         .product-card {
-            background: var(--dark); border: 1px solid rgba(201, 168, 76, 0.12);
-            border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
-            transition: transform 0.3s, border-color 0.3s; cursor: pointer;
+            background: var(--glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); border-radius: 2px; overflow: hidden;
+            display: flex; flex-direction: column; cursor: pointer;
+            transition: all 0.4s ease; opacity: 0; transform: translateY(30px); animation: fadeUp 0.6s forwards;
         }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         
-        /* Minimal Bottle with Flowers Design */
+        .product-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.1); }
+        
+        /* Premium Minimal Bottle Design */
         .product-image {
-            height: 240px; background: #080808; display: flex; align-items: center; justify-content: center;
-            position: relative; border-bottom: 1px solid rgba(201, 168, 76, 0.08); overflow: hidden;
+            height: 280px; background: linear-gradient(180deg, #0f0f0f 0%, #050505 100%);
+            display: flex; align-items: center; justify-content: center; position: relative; border-bottom: 1px solid rgba(255, 255, 255, 0.03); overflow: hidden;
         }
-        .product-tag {
-            position: absolute; top: 12px; left: 12px; font-size: 0.65rem;
-            padding: 4px 10px; background: rgba(201, 168, 76, 0.15); color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.3); text-transform: uppercase; border-radius: 3px; z-index: 5;
-        }
-        .product-size {
-            position: absolute; top: 12px; right: 12px; font-size: 0.65rem;
-            padding: 4px 8px; background: rgba(255,255,255,0.1); color: var(--light-gray); border-radius: 3px; z-index: 5;
-        }
+        .product-image::after { content: ''; position: absolute; width: 100%; height: 50%; bottom: 0; background: linear-gradient(0deg, rgba(212,175,55,0.05) 0%, transparent 100%); pointer-events: none; }
+        
+        .product-tag { position: absolute; top: 15px; left: 15px; font-size: 0.6rem; padding: 5px 12px; background: rgba(212, 175, 55, 0.1); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.3); text-transform: uppercase; letter-spacing: 1px; z-index: 5; }
+        .product-size { position: absolute; top: 15px; right: 15px; font-size: 0.65rem; color: var(--gray); z-index: 5; font-weight: 300; }
 
-        .minimal-bottle-container { position: relative; display: flex; flex-direction: column; align-items: center; }
-
+        .minimal-bottle-container { position: relative; display: flex; flex-direction: column; align-items: center; z-index: 2; }
         .minimal-bottle {
-            width: 70px; height: 100px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
-            border: 2px solid rgba(201, 168, 76, 0.5); border-radius: 18px 18px 5px 5px;
+            width: 75px; height: 105px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 15px 15px 4px 4px;
             position: relative; display: flex; align-items: center; justify-content: center;
-            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 0 10px 20px rgba(201, 168, 76, 0.1); backdrop-filter: blur(2px);
+            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), inset -5px -5px 15px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.9);
+            backdrop-filter: blur(3px);
         }
+        .minimal-bottle::before { content:''; position:absolute; top:2px; left:5px; width:15px; height:90%; background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); border-radius: 10px; }
+        
         .minimal-cap {
-            width: 24px; height: 20px; background: linear-gradient(to right, #e8d5a3, #c9a84c, #a07e2e);
-            border-radius: 3px 3px 0 0; margin-bottom: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            width: 26px; height: 22px; background: linear-gradient(90deg, #b38b22, #f9e596, #b38b22);
+            border-radius: 2px 2px 0 0; margin-bottom: 3px; box-shadow: 0 4px 10px rgba(0,0,0,0.8); position: relative;
         }
         .minimal-label {
-            width: 82%; padding: 4px 0; background: var(--darker); border: 1px solid var(--gold);
-            text-align: center; font-family: 'Playfair Display', serif; font-size: 0.55rem; color: var(--gold); text-transform: uppercase;
+            width: 85%; padding: 6px 0; background: rgba(5,5,5,0.9); border: 1px solid var(--gold-dark);
+            text-align: center; font-family: 'Playfair Display', serif; font-size: 0.6rem; color: var(--gold-light); text-transform: uppercase; letter-spacing: 1.5px;
         }
 
         /* Floating Flowers */
-        .flowers { position: absolute; font-size: 1.5rem; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); z-index: 3; }
-        .f1 { top: -15px; left: -28px; animation: float 3s ease-in-out infinite; }
-        .f2 { bottom: 10px; right: -28px; animation: float 4s ease-in-out infinite reverse; font-size: 1.3rem; }
-        .f3 { top: 35px; right: -22px; animation: float 3.5s ease-in-out infinite; font-size: 1.1rem; }
-        .f4 { bottom: -10px; left: -12px; animation: float 4.5s ease-in-out infinite; font-size: 0.9rem; }
+        .flowers { position: absolute; font-size: 1.5rem; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); z-index: 1; opacity: 0.8; transition: 0.3s; }
+        .product-card:hover .flowers { opacity: 1; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4)); }
+        .f1 { top: -15px; left: -35px; animation: float 3s ease-in-out infinite; }
+        .f2 { bottom: 10px; right: -35px; animation: float 4s ease-in-out infinite reverse; font-size: 1.3rem; }
+        .f3 { top: 40px; right: -25px; animation: float 3.5s ease-in-out infinite; font-size: 1.1rem; }
+        .f4 { bottom: -15px; left: -20px; animation: float 4.5s ease-in-out infinite; font-size: 0.9rem; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
 
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-        .product-info { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-        .product-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 2px; }
-        .product-inspired { font-size: 0.75rem; color: var(--gold-light); margin-bottom: 10px; font-style: italic; }
-        .product-desc { font-size: 0.78rem; color: #b8b8b8; line-height: 1.55; margin-bottom: 18px; font-weight: 300; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .product-bottom { margin-top: auto; display: flex; align-items: center; justify-content: space-between; pt-2; }
-        .product-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); }
+        .product-info { padding: 25px; flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,0.4); }
+        .product-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 2px; color: var(--white); }
+        .product-inspired { font-size: 0.75rem; color: var(--gray); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .product-inspired span { color: var(--gold); }
+        .product-desc { font-size: 0.8rem; color: #a0a0a0; line-height: 1.6; margin-bottom: 25px; font-weight: 300; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-bottom { margin-top: auto; display: flex; align-items: center; justify-content: space-between; }
+        .product-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; color: var(--gold); }
         .add-btn {
-            padding: 10px 18px; background: var(--gold); color: var(--black); border: none;
-            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; border-radius: 3px; z-index: 10;
+            padding: 10px 18px; background: transparent; color: var(--gold); border: 1px solid var(--gold);
+            font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
         }
-        .add-btn:hover { background: var(--white); }
+        .add-btn:hover { background: var(--gold); color: var(--black); }
 
         /* Full Screen Product Page Overlay */
         .product-page-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black);
-            z-index: 10000; overflow-y: auto; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 100000; overflow-y: auto; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
             visibility: hidden;
         }
         .product-page-overlay.open { transform: translateX(0); visibility: visible; }
         
-        .pp-header { padding: 20px 30px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.1); position: sticky; top: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); z-index: 10; }
-        .pp-back { color: var(--gold); cursor: pointer; font-size: 1rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-        .pp-back:hover { color: var(--white); }
+        .pp-header { padding: 25px 40px; display: flex; justify-content: space-between; position: sticky; top: 0; background: rgba(5,5,5,0.9); backdrop-filter: blur(15px); z-index: 10; border-bottom: 1px solid var(--glass-border); }
+        .pp-back { color: var(--gray); cursor: pointer; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; display: flex; align-items: center; gap: 8px;}
+        .pp-back:hover { color: var(--gold); }
         
-        .pp-content { max-width: 1200px; margin: 0 auto; padding: 40px 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-        .pp-image-container { background: var(--dark); border-radius: 8px; height: 500px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden;}
+        .pp-content { max-width: 1200px; margin: 0 auto; padding: 50px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; min-height: 90vh; align-items: center; }
+        .pp-image-container { background: radial-gradient(circle at center, rgba(212,175,55,0.1), transparent 70%); border-radius: 2px; height: 550px; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid var(--glass-border); }
         
-        /* Scaled up bottle for product page */
-        .pp-image-container .minimal-bottle { width: 140px; height: 200px; border-radius: 36px 36px 10px 10px; border-width: 3px; }
-        .pp-image-container .minimal-cap { width: 48px; height: 40px; margin-bottom: 4px;}
-        .pp-image-container .minimal-label { font-size: 0.9rem; padding: 8px 0; }
-        .pp-image-container .flowers { font-size: 3rem; }
+        .pp-image-container .minimal-bottle { width: 150px; height: 210px; border-width: 2px; border-radius: 30px 30px 6px 6px; }
+        .pp-image-container .minimal-cap { width: 50px; height: 42px; margin-bottom: 6px; }
+        .pp-image-container .minimal-label { font-size: 1rem; padding: 12px 0; }
+        .pp-image-container .flowers { font-size: 3.5rem; }
         
         .pp-details { display: flex; flex-direction: column; justify-content: center; }
-        .pp-title { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--white); margin-bottom: 5px; }
-        .pp-inspired { font-size: 1rem; color: var(--gold); font-style: italic; margin-bottom: 20px; }
-        .pp-price { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 30px; }
-        .pp-desc { font-size: 0.95rem; color: var(--light-gray); line-height: 1.8; margin-bottom: 25px; }
+        .pp-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--white); margin-bottom: 5px; line-height: 1.1; }
+        .pp-inspired { font-size: 0.9rem; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+        .pp-inspired span { color: var(--gold); font-weight: 500; }
+        .pp-price { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 400; color: var(--gold); margin-bottom: 30px; }
+        .pp-desc { font-size: 1rem; color: #b0b0b0; line-height: 1.8; margin-bottom: 30px; font-weight: 300; }
         
-        .pp-notes { background: rgba(201,168,76,0.05); padding: 20px; border-left: 3px solid var(--gold); margin-bottom: 30px; border-radius: 0 4px 4px 0; }
-        .pp-notes h4 { color: var(--gold); margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .pp-notes p { color: var(--light-gray); font-size: 0.85rem; line-height: 1.6; }
+        .pp-notes { padding: 25px; border: 1px solid var(--glass-border); margin-bottom: 40px; background: rgba(255,255,255,0.02); }
+        .pp-notes h4 { color: var(--gold); margin-bottom: 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        .pp-notes p { color: var(--light-gray); font-size: 0.9rem; line-height: 1.8; font-weight: 300;}
+        .pp-notes strong { color: var(--white); font-weight: 500;}
 
-        .pp-actions { display: flex; gap: 15px; margin-top: 10px; }
-        .btn-buy-now { flex: 1; padding: 18px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--black); border: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
-        .btn-buy-now:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(201,168,76,0.3); }
-        .btn-add-bag { padding: 18px 30px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .pp-actions { display: flex; gap: 20px; }
+        .btn-buy-now { flex: 1; padding: 20px; background: var(--gold); color: var(--black); border: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
+        .btn-buy-now:hover { background: var(--gold-light); box-shadow: 0 10px 30px rgba(212,175,55,0.3); }
+        .btn-add-bag { padding: 20px 40px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
         .btn-add-bag:hover { background: var(--gold); color: var(--black); }
 
-        @media (max-width: 768px) {
-            .pp-content { grid-template-columns: 1fr; gap: 30px; padding: 20px; }
-            .pp-image-container { height: 350px; }
-            .pp-title { font-size: 2.2rem; }
+        @media (max-width: 900px) {
+            .pp-content { grid-template-columns: 1fr; gap: 40px; padding: 30px 20px; text-align: center; }
+            .pp-image-container { height: 400px; }
+            .pp-title { font-size: 2.5rem; }
+            .pp-notes { text-align: left; }
             .pp-actions { flex-direction: column; }
+            .welcome-box { margin: 20px; padding: 40px 20px; }
+            .hero-title { font-size: 2.8rem; }
         }
 
-        /* Cart Sidebar & Checkouts (Same as before) */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10001; opacity: 0; visibility: hidden; transition: 0.3s; }
+        /* Cart Sidebar */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 100001; opacity: 0; visibility: hidden; transition: 0.3s; }
         .cart-overlay.open { opacity: 1; visibility: visible; }
-        .cart-sidebar { position: fixed; top: 0; right: -420px; width: 400px; max-width: 100%; height: 100%; background: var(--darker); z-index: 10002; transition: right 0.4s ease; display: flex; flex-direction: column; border-left: 1px solid rgba(201, 168, 76, 0.2); }
+        .cart-sidebar { position: fixed; top: 0; right: -420px; width: 400px; max-width: 100%; height: 100%; background: #0a0a0a; z-index: 100002; transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); display: flex; flex-direction: column; border-left: 1px solid var(--glass-border); }
         .cart-sidebar.open { right: 0; }
-        .cart-header { padding: 20px 25px; border-bottom: 1px solid rgba(201, 168, 76, 0.15); display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px 25px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .cart-footer { padding: 20px 25px; border-top: 1px solid rgba(201, 168, 76, 0.15); background: #080808; }
-        .cart-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--light-gray); }
+        .cart-header { padding: 25px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 25px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cart-footer { padding: 25px; border-top: 1px solid var(--glass-border); background: #050505; }
+        .cart-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem; color: var(--light-gray); }
 
-        /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10003; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; }
+        /* Checkout Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 100003; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; }
         .modal-overlay.open { opacity: 1; visibility: visible; }
-        .modal { background: var(--darker); border: 1px solid rgba(201, 168, 76, 0.25); width: 100%; max-width: 550px; max-height: 90vh; overflow-y: auto; padding: 30px; border-radius: 8px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
-        .form-input { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(201, 168, 76, 0.2); color: white; outline: none; border-radius: 4px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .submit-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--black); font-weight: 700; text-transform: uppercase; border: none; cursor: pointer; margin-top: 15px; border-radius: 4px; }
+        .modal { background: #0a0a0a; border: 1px solid var(--glass-border); width: 100%; max-width: 600px; max-height: 95vh; overflow-y: auto; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); transform: translateY(20px); transition: 0.4s; }
+        .modal-overlay.open .modal { transform: translateY(0); }
         
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--dark); border: 1px solid var(--gold); padding: 12px 25px; z-index: 10005; transition: 0.4s; font-size: 0.85rem; color: var(--white); border-radius: 30px; }
+        .form-section-title { color: var(--gold); font-size: 1.1rem; font-family: 'Playfair Display', serif; margin: 25px 0 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;}
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); margin-bottom: 8px; }
+        .form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: white; font-family: 'Poppins', sans-serif; outline: none; transition: 0.3s; }
+        .form-input:focus { border-color: var(--gold); background: rgba(212,175,55,0.05); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        /* Payment Options CSS */
+        .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .payment-option input { display: none; }
+        .payment-box { display: block; padding: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: var(--gray); cursor: pointer; transition: 0.3s; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .payment-option input:checked + .payment-box { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.05); }
+        .payment-info { background: rgba(212,175,55,0.05); padding: 15px; font-size: 0.85rem; border: 1px solid var(--glass-border); color: var(--light-gray); text-align: center; line-height: 1.6; border-radius: 4px; margin-bottom: 20px;}
+        .payment-info strong { color: var(--white); font-size: 1.1rem; letter-spacing: 1px; }
+
+        .submit-btn { width: 100%; padding: 18px; background: var(--gold); color: var(--black); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: none; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: var(--gold-light); }
+        
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #111; border: 1px solid var(--gold); padding: 15px 30px; z-index: 100005; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); font-size: 0.85rem; color: var(--white); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .toast.show { transform: translateX(-50%) translateY(0); }
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 997; box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4); text-decoration: none; transition: 0.3s; }
-        .whatsapp-float:hover { transform: scale(1.1); }
-        .whatsapp-float svg { width: 30px; height: 30px; fill: white; }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 9999; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); text-decoration: none; transition: 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1) translateY(-5px); }
+        .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
     </style>
 </head>
 <body>
 
+    <!-- Welcome Modal -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-box">
+            <div class="welcome-logo">FBJ Perfumes</div>
+            <div class="welcome-subtitle">The Art of Fine Fragrance</div>
+            <p class="welcome-text">
+                Welcome to our luxury boutique. Experience an exclusive collection of high-concentration Eau De Parfums, masterfully crafted to deliver 80%+ similarity to the world's most iconic designer scents. 
+                <br><br>Enjoy <strong>Free Delivery</strong> on orders above Rs. 3,500.
+            </p>
+            <button class="btn-enter" onclick="closeWelcome()">Enter Boutique</button>
+        </div>
+    </div>
+
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="header">
         <div class="nav-container">
             <a href="#" class="logo">FBJ <span>Perfumes</span></a>
             <div class="cart-icon" onclick="toggleCart()">
@@ -244,10 +314,10 @@
     <!-- Hero -->
     <section class="hero">
         <div>
-            <div class="hero-badge">✦ Premium Inspired Fragrances ✦</div>
-            <h1 class="hero-title">Luxury Scents,<br><span>Unmatched Prices</span></h1>
-            <p class="hero-desc">Experience 80%+ scent similarity to iconic designer fragrances. High-concentration 50ml EDP bottles delivered with Cash on Delivery across Pakistan.</p>
-            <a href="#collection" class="btn-primary">Shop The Collection</a>
+            <div class="hero-badge">✦ The Signature Collection ✦</div>
+            <h1 class="hero-title">Luxury Scents,<br><span>Unmatched Prices.</span></h1>
+            <p class="hero-desc">Discover our premium range of 50ml Eau De Parfums. Crafted with precision for 8+ hours of projection. Free delivery on orders above Rs. 3500 across Pakistan.</p>
+            <a href="#collection" class="btn-primary">Explore Fragrances</a>
         </div>
     </section>
 
@@ -255,14 +325,14 @@
     <section class="section" id="collection">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">The Fragrance Lineup</h2>
-                <p class="section-subtitle">Find your signature scent below</p>
+                <h2 class="section-title">The Masterpieces</h2>
+                <p class="section-subtitle">Find your ultimate signature scent</p>
             </div>
 
             <!-- Search Bar -->
             <div class="search-container">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by perfume name or inspired brand..." oninput="handleSearch()">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name, brand, or notes..." oninput="handleSearch()">
             </div>
 
             <div class="filter-tabs" id="filterTabs">
@@ -281,6 +351,7 @@
             <div class="pp-back" onclick="closeProductPage()">← Back to Collection</div>
             <div class="cart-icon" onclick="toggleCart()">
                 <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <div class="cart-badge" id="ppCartBadge">0</div>
             </div>
         </div>
         <div class="pp-content" id="ppContent">
@@ -288,19 +359,19 @@
         </div>
     </div>
 
-    <!-- Cart Sidebar & Checkouts -->
+    <!-- Cart Sidebar -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
-            <h3 style="font-family:'Playfair Display', serif; color:var(--gold);">Your Bag (<span id="cartCount">0</span>)</h3>
-            <span style="cursor:pointer;font-size:1.5rem;color:var(--gray);" onclick="toggleCart()">&times;</span>
+            <h3 style="font-family:'Playfair Display', serif; color:var(--gold); font-size:1.5rem;">Your Bag</h3>
+            <span style="cursor:pointer;font-size:1.8rem;color:var(--gray);" onclick="toggleCart()">&times;</span>
         </div>
         <div class="cart-items" id="cartItems"></div>
         <div class="cart-footer" id="cartFooter" style="display:none;">
             <div class="cart-row"><span>Subtotal:</span><span id="subtotalTxt">Rs. 0</span></div>
             <div class="cart-row"><span>Shipping:</span><span id="shippingTxt">Rs. 200</span></div>
-            <div class="cart-row" style="color:var(--gold);font-weight:bold;font-size:1.1rem;margin-top:10px;">
-                <span>Total (COD):</span><span id="totalTxt">Rs. 0</span>
+            <div class="cart-row" style="color:var(--gold);font-weight:600;font-size:1.2rem;margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px;">
+                <span>Grand Total:</span><span id="totalTxt">Rs. 0</span>
             </div>
             <button class="submit-btn" onclick="openCheckout()">Proceed to Checkout</button>
         </div>
@@ -310,11 +381,13 @@
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-                <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-size:1.5rem;">Delivery Details</h3>
-                <span style="cursor:pointer;font-size:1.5rem;color:var(--gray);" onclick="closeCheckout()">&times;</span>
+                <h3 style="color:var(--gold);font-family:'Playfair Display',serif;font-size:1.8rem;">Secure Checkout</h3>
+                <span style="cursor:pointer;font-size:1.8rem;color:var(--gray);" onclick="closeCheckout()">&times;</span>
             </div>
 
             <form id="orderForm" onsubmit="submitOrderToDatabase(event)">
+                
+                <div class="form-section-title">Delivery Information</div>
                 <div class="form-group">
                     <label>Full Name *</label>
                     <input type="text" id="custName" class="form-input" placeholder="e.g. Ali Ahmed" required>
@@ -334,12 +407,31 @@
                     </div>
                     <div class="form-group">
                         <label>Notes (Optional)</label>
-                        <input type="text" id="custNotes" class="form-input" placeholder="Any special instructions">
+                        <input type="text" id="custNotes" class="form-input" placeholder="Special instructions">
                     </div>
                 </div>
 
-                <div style="background:rgba(201,168,76,0.05);padding:12px;margin:15px 0;font-size:0.85rem;border:1px solid rgba(201,168,76,0.2);border-radius:4px;color:var(--light-gray);">
-                    💵 <strong>Cash on Delivery:</strong> Pay when you receive your package.
+                <div class="form-section-title">Payment Method</div>
+                <div class="payment-methods">
+                    <label class="payment-option">
+                        <input type="radio" name="payment_method" value="COD" checked onchange="togglePaymentInfo()">
+                        <span class="payment-box">Cash on Delivery</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment_method" value="JazzCash" onchange="togglePaymentInfo()">
+                        <span class="payment-box">JazzCash</span>
+                    </label>
+                </div>
+
+                <div id="cod-info" class="payment-info">
+                    💵 <strong>CASH ON DELIVERY</strong> <br> Pay your total amount to the rider when you receive your package.
+                </div>
+                
+                <div id="jazzcash-info" class="payment-info" style="display:none;">
+                    💳 <strong>JAZZCASH PAYMENT</strong> <br><br>
+                    Please send the total amount to:<br>
+                    <strong>03070141754</strong><br><br>
+                    <em>Your order will be dispatched instantly upon payment verification.</em>
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitBtn">Confirm & Place Order</button>
@@ -349,12 +441,12 @@
 
     <!-- Success Modal -->
     <div class="modal-overlay" id="successModal">
-        <div class="modal" style="text-align:center;">
-            <div style="font-size:3.5rem;color:var(--success);margin-bottom:10px;">✓</div>
-            <h2 style="font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:10px;font-size:2rem;">Order Received!</h2>
-            <p id="successOrderId" style="color:var(--gray);font-size:0.9rem;margin-bottom:15px;letter-spacing:1px;"></p>
-            <p style="font-size:0.95rem;color:var(--light-gray);margin-bottom:30px;line-height:1.6;">Thank you! Your order has been securely saved. Our team will dispatch your parcel shortly.</p>
-            <button class="btn-primary" onclick="closeSuccess()">Continue Browsing</button>
+        <div class="modal" style="text-align:center; padding: 50px 40px;">
+            <div style="font-size:4rem;color:var(--success);margin-bottom:15px; text-shadow: 0 0 20px rgba(37,211,102,0.4);">✓</div>
+            <h2 style="font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:10px;font-size:2.2rem;">Order Confirmed</h2>
+            <p id="successOrderId" style="color:var(--gray);font-size:0.9rem;margin-bottom:20px;letter-spacing:2px;"></p>
+            <p style="font-size:0.95rem;color:var(--light-gray);margin-bottom:40px;line-height:1.6;">Thank you for choosing FBJ Perfumes. Your order has been securely saved. Our team will prepare your luxury parcel for dispatch immediately.</p>
+            <button class="btn-primary" onclick="closeSuccess()" style="padding: 15px 40px;">Return to Store</button>
         </div>
     </div>
 
@@ -362,7 +454,7 @@
     <div class="toast" id="toast">Added to bag!</div>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/923444424122?text=Hello!%20I%20have%20a%20question%20about%20FBJ%20Perfumes." target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+    <a href="https://wa.me/923444424122?text=Hello!%20I%20am%20interested%20in%20FBJ%20Perfumes." target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
 
@@ -370,28 +462,28 @@
         // GOOGLE SHEET URL
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyHFaXuIhyeiZglAJnjdMonYJyikylDUcMtb4_PXKsiUZ46hdUJLxvAYRo7-ESHopt81Q/exec";
 
-        // Catalog with extended notes
+        // ALL PRICES INCREASED BY 200 RS
         const catalog = [
-            { id: 1, name: "FBJ Avent", inspired: "Creed Aventus", price: 1499, gender: "men", notes: "Top: Pineapple, Bergamot, Apple. Heart: Birch, Patchouli, Jasmine. Base: Musk, Oakmoss, Vanilla.", desc: "Opens with a vibrant burst of fruit and citrus before settling into a rich, smoky, and woody base." },
-            { id: 2, name: "FBJ Sauvage", inspired: "Dior Sauvage", price: 1499, gender: "men", notes: "Top: Calabrian Bergamot, Pepper. Heart: Sichuan Pepper, Lavender, Vetiver. Base: Ambroxan, Cedar.", desc: "Radiates fresh Calabrian bergamot spiked with Sichuan pepper and warm, woody ambroxan." },
-            { id: 3, name: "FBJ Bleu", inspired: "Bleu de Chanel", price: 1499, gender: "men", notes: "Top: Grapefruit, Lemon, Mint. Heart: Ginger, Nutmeg, Jasmine. Base: Incense, Vetiver, Sandalwood.", desc: "A sophisticated fusion of crisp citrus, rich cedarwood, and aromatic sandalwood notes." },
-            { id: 4, name: "FBJ Aqua", inspired: "Acqua di Giò", price: 1399, gender: "men", notes: "Top: Lime, Lemon, Bergamot. Heart: Sea Notes, Jasmine, Rosemary. Base: White Musk, Cedar, Patchouli.", desc: "Fresh aquatic sea spray balanced with sweet jasmine, rosemary, and warm cedarwood." },
-            { id: 5, name: "FBJ Million", inspired: "Paco Rabanne 1 Million", price: 1399, gender: "men", notes: "Top: Blood Mandarin, Grapefruit. Heart: Cinnamon, Spicy Notes, Rose. Base: Amber, Leather, Indian Patchouli.", desc: "An intoxicating blend of spicy cinnamon, blood mandarin, and rich leather accord." },
-            { id: 6, name: "FBJ Invict", inspired: "Paco Rabanne Invictus", price: 1399, gender: "men", notes: "Top: Sea Notes, Grapefruit. Heart: Bay Leaf, Jasmine. Base: Ambergris, Guaiac Wood, Oakmoss.", desc: "Vibrant grapefruit and marine notes layered over aromatic bay leaf and guaiac wood." },
-            { id: 7, name: "FBJ Eros", inspired: "Versace Eros", price: 1399, gender: "men", notes: "Top: Mint, Green Apple, Lemon. Heart: Tonka Bean, Ambroxan, Geranium. Base: Madagascar Vanilla, Cedar.", desc: "Vibrant mint leaf and lemon zest complemented by warm tonka bean and sweet vanilla." },
-            { id: 8, name: "FBJ Cool", inspired: "Davidoff Cool Water", price: 1299, gender: "men", notes: "Top: Sea Water, Lavender, Mint. Heart: Sandalwood, Jasmine, Neroli. Base: Musk, Vetiver, Cedar.", desc: "Crisp lavender, refreshing peppermint, and sea water settling into warm sandalwood." },
-            { id: 9, name: "FBJ Ultra", inspired: "JPG Ultra Male", price: 1499, gender: "men", notes: "Top: Pear, Lavender, Mint. Heart: Cinnamon, Clary Sage. Base: Black Vanilla Husk, Amber, Patchouli.", desc: "Intoxicating dark pear, spiced cinnamon, and smooth black vanilla with an energetic kick." },
-            { id: 10, name: "FBJ Code", inspired: "Armani Code", price: 1399, gender: "men", notes: "Top: Lemon, Bergamot. Heart: Star Anise, Olive Blossom. Base: Leather, Tonka Bean, Tobacco.", desc: "Sleek citrus notes merging into soft olive tree blossom, tonka bean, and fine leather." },
-            { id: 11, name: "FBJ Leather", inspired: "Tom Ford Tuscan Leather", price: 1499, gender: "men", notes: "Top: Saffron, Raspberry, Thyme. Heart: Olibanum, Jasmine. Base: Leather, Suede, Amber.", desc: "Deep raw leather enriched with sweet wild raspberry, thyme, and golden saffron." },
-            { id: 12, name: "FBJ Oud", inspired: "Tom Ford Oud Wood", price: 1599, gender: "men", notes: "Top: Rosewood, Cardamom. Heart: Oud Wood, Sandalwood, Vetiver. Base: Tonka Bean, Vanilla, Amber.", desc: "Rare smoky oud wood combined with Brazilian rosewood, cardamom, and vetiver." },
-            { id: 13, name: "FBJ Black", inspired: "YSL Black Opium", price: 1399, gender: "women", notes: "Top: Pear, Pink Pepper. Heart: Coffee, Jasmine, Bitter Almond. Base: Vanilla, Patchouli, Cedar.", desc: "Addictive roasted coffee bean paired with soft white flowers and sensual vanilla." },
-            { id: 14, name: "FBJ Libre", inspired: "YSL Libre", price: 1399, gender: "women", notes: "Top: Lavender, Mandarin Orange. Heart: Orange Blossom, Jasmine. Base: Madagascar Vanilla, Musk.", desc: "Moroccan orange blossom intertwined with bold French lavender and sensual musk." },
-            { id: 15, name: "FBJ Good Girl", inspired: "Carolina Herrera Good Girl", price: 1399, gender: "women", notes: "Top: Almond, Coffee. Heart: Tuberose, Jasmine Sambac. Base: Tonka Bean, Cacao, Vanilla.", desc: "Radiant tuberose and jasmine Sambac contrasted with dark roasted cocoa and tonka bean." },
-            { id: 16, name: "FBJ Bloom", inspired: "VS Bombshell", price: 1299, gender: "women", notes: "Top: Passionfruit, Grapefruit. Heart: Peony, Vanilla Orchid. Base: Musk, Woods, Oakmoss.", desc: "A sparkling cocktail of passion fruit, Shangri-la peony, and sweet vanilla orchid." },
-            { id: 17, name: "FBJ Flora", inspired: "Gucci Flora", price: 1399, gender: "women", notes: "Top: Peony, Citrus. Heart: Osmanthus, Rose. Base: Sandalwood, Patchouli, Pink Pepper.", desc: "Delicate peony and fresh rose notes layered over rare osmanthus and warm sandalwood." },
-            { id: 18, name: "FBJ Crystal", inspired: "Versace Bright Crystal", price: 1299, gender: "women", notes: "Top: Yuzu, Pomegranate. Heart: Peony, Lotus, Magnolia. Base: Musk, Mahogany, Amber.", desc: "Chilled yuzu and juicy pomegranate blended with peony petals and lotus flower." },
-            { id: 19, name: "FBJ Burberry", inspired: "My Burberry", price: 1399, gender: "women", notes: "Top: Sweet Pea, Bergamot. Heart: Geranium, Freesia, Quince. Base: Patchouli, Damask Rose.", desc: "Sweet pea and bergamot opening into a rain-tipped floral heart of grandiflora rose." },
-            { id: 20, name: "FBJ Poison", inspired: "Dior Poison", price: 1399, gender: "women", notes: "Top: Plum, Wild Berries, Coriander. Heart: Tuberose, Incense, Honey. Base: Vanilla, Amber, Sandalwood.", desc: "Mysterious wild berries, coriander, and cinnamon melting into honeyed amber and opopanax." }
+            { id: 1, name: "FBJ Avent", inspired: "Creed Aventus", price: 1699, gender: "men", notes: "Top: Pineapple, Bergamot, Apple. Heart: Birch, Patchouli, Jasmine. Base: Musk, Oakmoss, Vanilla.", desc: "Opens with a vibrant burst of fruit and citrus before settling into a rich, smoky, and woody base." },
+            { id: 2, name: "FBJ Sauvage", inspired: "Dior Sauvage", price: 1699, gender: "men", notes: "Top: Calabrian Bergamot, Pepper. Heart: Sichuan Pepper, Lavender, Vetiver. Base: Ambroxan, Cedar.", desc: "Radiates fresh Calabrian bergamot spiked with Sichuan pepper and warm, woody ambroxan." },
+            { id: 3, name: "FBJ Bleu", inspired: "Bleu de Chanel", price: 1699, gender: "men", notes: "Top: Grapefruit, Lemon, Mint. Heart: Ginger, Nutmeg, Jasmine. Base: Incense, Vetiver, Sandalwood.", desc: "A sophisticated fusion of crisp citrus, rich cedarwood, and aromatic sandalwood notes." },
+            { id: 4, name: "FBJ Aqua", inspired: "Acqua di Giò", price: 1599, gender: "men", notes: "Top: Lime, Lemon, Bergamot. Heart: Sea Notes, Jasmine, Rosemary. Base: White Musk, Cedar, Patchouli.", desc: "Fresh aquatic sea spray balanced with sweet jasmine, rosemary, and warm cedarwood." },
+            { id: 5, name: "FBJ Million", inspired: "Paco Rabanne 1 Million", price: 1599, gender: "men", notes: "Top: Blood Mandarin, Grapefruit. Heart: Cinnamon, Spicy Notes, Rose. Base: Amber, Leather, Indian Patchouli.", desc: "An intoxicating blend of spicy cinnamon, blood mandarin, and rich leather accord." },
+            { id: 6, name: "FBJ Invict", inspired: "Paco Rabanne Invictus", price: 1599, gender: "men", notes: "Top: Sea Notes, Grapefruit. Heart: Bay Leaf, Jasmine. Base: Ambergris, Guaiac Wood, Oakmoss.", desc: "Vibrant grapefruit and marine notes layered over aromatic bay leaf and guaiac wood." },
+            { id: 7, name: "FBJ Eros", inspired: "Versace Eros", price: 1599, gender: "men", notes: "Top: Mint, Green Apple, Lemon. Heart: Tonka Bean, Ambroxan, Geranium. Base: Madagascar Vanilla, Cedar.", desc: "Vibrant mint leaf and lemon zest complemented by warm tonka bean and sweet vanilla." },
+            { id: 8, name: "FBJ Cool", inspired: "Davidoff Cool Water", price: 1499, gender: "men", notes: "Top: Sea Water, Lavender, Mint. Heart: Sandalwood, Jasmine, Neroli. Base: Musk, Vetiver, Cedar.", desc: "Crisp lavender, refreshing peppermint, and sea water settling into warm sandalwood." },
+            { id: 9, name: "FBJ Ultra", inspired: "JPG Ultra Male", price: 1699, gender: "men", notes: "Top: Pear, Lavender, Mint. Heart: Cinnamon, Clary Sage. Base: Black Vanilla Husk, Amber, Patchouli.", desc: "Intoxicating dark pear, spiced cinnamon, and smooth black vanilla with an energetic kick." },
+            { id: 10, name: "FBJ Code", inspired: "Armani Code", price: 1599, gender: "men", notes: "Top: Lemon, Bergamot. Heart: Star Anise, Olive Blossom. Base: Leather, Tonka Bean, Tobacco.", desc: "Sleek citrus notes merging into soft olive tree blossom, tonka bean, and fine leather." },
+            { id: 11, name: "FBJ Leather", inspired: "Tom Ford Tuscan Leather", price: 1699, gender: "men", notes: "Top: Saffron, Raspberry, Thyme. Heart: Olibanum, Jasmine. Base: Leather, Suede, Amber.", desc: "Deep raw leather enriched with sweet wild raspberry, thyme, and golden saffron." },
+            { id: 12, name: "FBJ Oud", inspired: "Tom Ford Oud Wood", price: 1799, gender: "men", notes: "Top: Rosewood, Cardamom. Heart: Oud Wood, Sandalwood, Vetiver. Base: Tonka Bean, Vanilla, Amber.", desc: "Rare smoky oud wood combined with Brazilian rosewood, cardamom, and vetiver." },
+            { id: 13, name: "FBJ Black", inspired: "YSL Black Opium", price: 1599, gender: "women", notes: "Top: Pear, Pink Pepper. Heart: Coffee, Jasmine, Bitter Almond. Base: Vanilla, Patchouli, Cedar.", desc: "Addictive roasted coffee bean paired with soft white flowers and sensual vanilla." },
+            { id: 14, name: "FBJ Libre", inspired: "YSL Libre", price: 1599, gender: "women", notes: "Top: Lavender, Mandarin Orange. Heart: Orange Blossom, Jasmine. Base: Madagascar Vanilla, Musk.", desc: "Moroccan orange blossom intertwined with bold French lavender and sensual musk." },
+            { id: 15, name: "FBJ Good Girl", inspired: "Carolina Herrera Good Girl", price: 1599, gender: "women", notes: "Top: Almond, Coffee. Heart: Tuberose, Jasmine Sambac. Base: Tonka Bean, Cacao, Vanilla.", desc: "Radiant tuberose and jasmine Sambac contrasted with dark roasted cocoa and tonka bean." },
+            { id: 16, name: "FBJ Bloom", inspired: "VS Bombshell", price: 1499, gender: "women", notes: "Top: Passionfruit, Grapefruit. Heart: Peony, Vanilla Orchid. Base: Musk, Woods, Oakmoss.", desc: "A sparkling cocktail of passion fruit, Shangri-la peony, and sweet vanilla orchid." },
+            { id: 17, name: "FBJ Flora", inspired: "Gucci Flora", price: 1599, gender: "women", notes: "Top: Peony, Citrus. Heart: Osmanthus, Rose. Base: Sandalwood, Patchouli, Pink Pepper.", desc: "Delicate peony and fresh rose notes layered over rare osmanthus and warm sandalwood." },
+            { id: 18, name: "FBJ Crystal", inspired: "Versace Bright Crystal", price: 1499, gender: "women", notes: "Top: Yuzu, Pomegranate. Heart: Peony, Lotus, Magnolia. Base: Musk, Mahogany, Amber.", desc: "Chilled yuzu and juicy pomegranate blended with peony petals and lotus flower." },
+            { id: 19, name: "FBJ Burberry", inspired: "My Burberry", price: 1599, gender: "women", notes: "Top: Sweet Pea, Bergamot. Heart: Geranium, Freesia, Quince. Base: Patchouli, Damask Rose.", desc: "Sweet pea and bergamot opening into a rain-tipped floral heart of grandiflora rose." },
+            { id: 20, name: "FBJ Poison", inspired: "Dior Poison", price: 1599, gender: "women", notes: "Top: Plum, Wild Berries, Coriander. Heart: Tuberose, Incense, Honey. Base: Vanilla, Amber, Sandalwood.", desc: "Mysterious wild berries, coriander, and cinnamon melting into honeyed amber and opopanax." }
         ];
 
         let cart = JSON.parse(localStorage.getItem('fbjCart')) || [];
@@ -400,22 +492,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderGrid(catalog);
             updateCart();
+            
+            // Header Scroll Effect
+            window.addEventListener('scroll', () => {
+                if(window.scrollY > 50) document.getElementById('header').classList.add('scrolled');
+                else document.getElementById('header').classList.remove('scrolled');
+            });
         });
 
-        // --- Search and Filter Logic ---
+        function closeWelcome() {
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+        }
+
+        // --- Search and Filter ---
         function handleSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            
-            // Remove active state from filter tabs while searching
-            if(query !== "") {
-                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-            } else {
-                document.querySelectorAll('.filter-tab')[0].classList.add('active'); // default to all
-                currentFilter = 'all';
-            }
+            if(query !== "") { document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active')); } 
+            else { document.querySelectorAll('.filter-tab')[0].classList.add('active'); currentFilter = 'all'; }
 
             const filtered = catalog.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(query) || p.inspired.toLowerCase().includes(query);
+                const matchesSearch = p.name.toLowerCase().includes(query) || p.inspired.toLowerCase().includes(query) || p.notes.toLowerCase().includes(query);
                 const matchesTab = currentFilter === 'all' ? true : p.gender === currentFilter;
                 return query !== "" ? matchesSearch : matchesTab;
             });
@@ -423,7 +519,7 @@
         }
 
         function filterScents(gender) {
-            document.getElementById('searchInput').value = ""; // Clear search
+            document.getElementById('searchInput').value = ""; 
             currentFilter = gender;
             document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
@@ -435,12 +531,12 @@
         function renderGrid(dataArray) {
             const grid = document.getElementById('productsGrid');
             if (dataArray.length === 0) {
-                grid.innerHTML = `<p style="color:var(--gray); text-align:center; grid-column: 1/-1;">No perfumes found matching your search.</p>`;
+                grid.innerHTML = `<p style="color:var(--gray); text-align:center; grid-column: 1/-1; padding: 40px; border: 1px dashed var(--glass-border);">No fragrances found. Try a different search.</p>`;
                 return;
             }
 
-            grid.innerHTML = dataArray.map(p => `
-                <div class="product-card" onclick="openProductPage(${p.id})">
+            grid.innerHTML = dataArray.map((p, index) => `
+                <div class="product-card" onclick="openProductPage(${p.id})" style="animation-delay: ${index * 0.05}s">
                     <div class="product-image">
                         <span class="product-tag">${p.gender === 'men' ? '♂ For Him' : '♀ For Her'}</span>
                         <span class="product-size">50ml</span>
@@ -457,7 +553,7 @@
                     </div>
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
-                        <div class="product-inspired">Inspired by ${p.inspired}</div>
+                        <div class="product-inspired">Inspired by <span>${p.inspired}</span></div>
                         <div class="product-desc">${p.desc}</div>
                         <div class="product-bottom">
                             <div class="product-price">Rs. ${p.price.toLocaleString()}</div>
@@ -468,46 +564,46 @@
             `).join('');
         }
 
-        // --- Product Page Logic ---
+        // --- Product Page ---
         function openProductPage(id) {
             const p = catalog.find(x => x.id === id);
             const container = document.getElementById('ppContent');
             
             container.innerHTML = `
                 <div class="pp-image-container">
-                    <span class="product-tag" style="top:20px;left:20px;font-size:0.8rem;">${p.gender === 'men' ? '♂ For Him' : '♀ For Her'}</span>
-                    <span class="product-size" style="top:20px;right:20px;font-size:0.8rem;">50ml EDP</span>
+                    <span class="product-tag" style="top:25px;left:25px;font-size:0.8rem;border-color:var(--gold);">${p.gender === 'men' ? '♂ For Him' : '♀ For Her'}</span>
+                    <span class="product-size" style="top:25px;right:25px;font-size:0.85rem;color:var(--white);">50ml Eau De Parfum</span>
                     <div class="minimal-bottle-container">
-                        <span class="flowers f1" style="left:-50px; top:-30px;">${p.gender === 'men' ? '🌿' : '🌸'}</span>
-                        <span class="flowers f2" style="right:-50px; bottom: 20px;">${p.gender === 'men' ? '🍂' : '🌺'}</span>
-                        <span class="flowers f3" style="right:-40px; top: 60px;">${p.gender === 'men' ? '✨' : '🌼'}</span>
-                        <span class="flowers f4" style="left:-30px; bottom:-20px;">${p.gender === 'men' ? '🌱' : '✨'}</span>
+                        <span class="flowers f1" style="left:-60px; top:-40px;">${p.gender === 'men' ? '🌿' : '🌸'}</span>
+                        <span class="flowers f2" style="right:-60px; bottom: 20px;">${p.gender === 'men' ? '🍂' : '🌺'}</span>
+                        <span class="flowers f3" style="right:-50px; top: 70px;">${p.gender === 'men' ? '✨' : '🌼'}</span>
+                        <span class="flowers f4" style="left:-40px; bottom:-20px;">${p.gender === 'men' ? '🌱' : '✨'}</span>
                         <div class="minimal-cap"></div>
                         <div class="minimal-bottle">
-                            <div class="minimal-label" style="font-size:0.8rem; padding: 8px 0;">${p.name.replace('FBJ ', '')}</div>
+                            <div class="minimal-label">${p.name.replace('FBJ ', '')}</div>
                         </div>
                     </div>
                 </div>
                 <div class="pp-details">
                     <h1 class="pp-title">${p.name}</h1>
-                    <div class="pp-inspired">High-quality inspiration of <strong>${p.inspired}</strong></div>
+                    <div class="pp-inspired">Masterfully inspired by <span>${p.inspired}</span></div>
                     <div class="pp-price">Rs. ${p.price.toLocaleString()}</div>
-                    <p class="pp-desc">${p.desc} Our 50ml Eau De Parfum guarantees 8+ hours of projection and similarity that captures the pure essence of the original designer scent.</p>
+                    <p class="pp-desc">${p.desc} Our 50ml high-concentration extraction guarantees 8+ hours of projection, capturing the exact luxury essence of the designer original.</p>
                     
                     <div class="pp-notes">
-                        <h4>Fragrance Notes</h4>
+                        <h4>Scent Profile</h4>
                         <p>${p.notes.replace(/Top:|Heart:|Base:/g, match => `<strong>${match}</strong><br>`)}</p>
                     </div>
 
                     <div class="pp-actions">
                         <button class="btn-add-bag" onclick="addToCart(${p.id})">Add to Bag</button>
-                        <button class="btn-buy-now" onclick="buyNow(${p.id})">Buy Now (COD)</button>
+                        <button class="btn-buy-now" onclick="buyNow(${p.id})">Buy Now</button>
                     </div>
                 </div>
             `;
             
             document.getElementById('productPage').classList.add('open');
-            document.body.style.overflow = "hidden"; // Prevent background scrolling
+            document.body.style.overflow = "hidden"; 
         }
 
         function closeProductPage() {
@@ -515,68 +611,61 @@
             document.body.style.overflow = "auto";
         }
 
-        function buyNow(id) {
-            addToCart(id);
-            closeProductPage();
-            openCheckout();
-        }
+        function buyNow(id) { addToCart(id); closeProductPage(); openCheckout(); }
 
-        // --- Cart Logic ---
+        // --- Cart ---
         function addToCart(id) {
             const item = catalog.find(p => p.id === id);
             const exist = cart.find(p => p.id === id);
             if (exist) exist.qty += 1;
             else cart.push({ ...item, qty: 1 });
             saveCart();
-            showToast(`✓ Added ${item.name} to bag!`);
+            showToast(`✓ ${item.name} added to your bag!`);
         }
 
         function updateQty(id, delta) {
             const item = cart.find(p => p.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) cart = cart.filter(p => p.id !== id);
-            }
+            if (item) { item.qty += delta; if (item.qty <= 0) cart = cart.filter(p => p.id !== id); }
             saveCart();
         }
 
-        function saveCart() {
-            localStorage.setItem('fbjCart', JSON.stringify(cart));
-            updateCart();
-        }
+        function saveCart() { localStorage.setItem('fbjCart', JSON.stringify(cart)); updateCart(); }
 
         function updateCart() {
             const count = cart.reduce((s, i) => s + i.qty, 0);
             const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-            const shipping = subtotal >= 2500 || subtotal === 0 ? 0 : 200;
+            
+            // Free delivery above 3500
+            const shipping = subtotal >= 3500 || subtotal === 0 ? 0 : 200;
             const total = subtotal + shipping;
 
             document.getElementById('cartBadge').textContent = count;
+            document.getElementById('ppCartBadge').textContent = count;
             document.getElementById('cartCount').textContent = count;
 
             const itemsContainer = document.getElementById('cartItems');
             const footer = document.getElementById('cartFooter');
 
             if (cart.length === 0) {
-                itemsContainer.innerHTML = `<p style="text-align:center;color:#666;padding:40px 0;">Your bag is empty. Select a perfume to start!</p>`;
+                itemsContainer.innerHTML = `<p style="text-align:center;color:var(--gray);padding:60px 20px; font-style:italic;">Your luxury bag is empty.</p>`;
                 footer.style.display = 'none';
             } else {
                 itemsContainer.innerHTML = cart.map(i => `
                     <div class="cart-item">
                         <div>
-                            <div style="font-weight:600;font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);">${i.name}</div>
-                            <div style="font-size:0.75rem;color:#888;">50ml EDP • Rs. ${i.price} x ${i.qty}</div>
+                            <div style="font-weight:600;font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold);">${i.name}</div>
+                            <div style="font-size:0.75rem;color:var(--gray); margin-top:3px;">50ml EDP • Rs. ${i.price} x ${i.qty}</div>
                         </div>
-                        <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(201,168,76,0.3);padding:2px 5px;border-radius:3px;">
-                            <button onclick="updateQty(${i.id}, -1)" style="width:24px;height:24px;background:transparent;color:var(--gold);border:none;cursor:pointer;font-size:1.2rem;">-</button>
-                            <span style="font-size:0.9rem;min-width:15px;text-align:center;">${i.qty}</span>
-                            <button onclick="updateQty(${i.id}, 1)" style="width:24px;height:24px;background:transparent;color:var(--gold);border:none;cursor:pointer;font-size:1.2rem;">+</button>
+                        <div style="display:flex;align-items:center;gap:12px;border:1px solid var(--glass-border);padding:4px 8px;border-radius:3px;">
+                            <button onclick="updateQty(${i.id}, -1)" style="background:transparent;color:var(--gold);border:none;cursor:pointer;font-size:1.2rem;">-</button>
+                            <span style="font-size:0.9rem;min-width:15px;text-align:center;color:var(--white);">${i.qty}</span>
+                            <button onclick="updateQty(${i.id}, 1)" style="background:transparent;color:var(--gold);border:none;cursor:pointer;font-size:1.2rem;">+</button>
                         </div>
                     </div>
                 `).join('');
                 footer.style.display = 'block';
                 document.getElementById('subtotalTxt').textContent = `Rs. ${subtotal.toLocaleString()}`;
-                document.getElementById('shippingTxt').textContent = shipping === 0 ? 'FREE' : `Rs. ${shipping}`;
+                document.getElementById('shippingTxt').textContent = shipping === 0 ? 'FREE (Above 3500)' : `Rs. ${shipping}`;
                 document.getElementById('totalTxt').textContent = `Rs. ${total.toLocaleString()}`;
             }
         }
@@ -597,18 +686,33 @@
             document.body.style.overflow = "auto";
         }
 
-        // --- Database Submission ---
+        // Toggle Payment Method Visibility
+        function togglePaymentInfo() {
+            const method = document.querySelector('input[name="payment_method"]:checked').value;
+            if (method === 'JazzCash') {
+                document.getElementById('jazzcash-info').style.display = 'block';
+                document.getElementById('cod-info').style.display = 'none';
+            } else {
+                document.getElementById('jazzcash-info').style.display = 'none';
+                document.getElementById('cod-info').style.display = 'block';
+            }
+        }
+
+        // --- Database Order ---
         async function submitOrderToDatabase(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
-            btn.textContent = "Saving Order to Database...";
+            btn.textContent = "Processing Order...";
 
             const orderId = "FBJ-" + Math.floor(100000 + Math.random() * 900000);
             const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-            const shipping = subtotal >= 2500 ? 0 : 200;
+            const shipping = subtotal >= 3500 ? 0 : 200; // Free delivery above 3500
             const total = subtotal + shipping;
             const itemsSummary = cart.map(i => `${i.name} (${i.qty}x)`).join(", ");
+            
+            // Get selected Payment Method
+            const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
 
             const queryParams = new URLSearchParams({
                 orderId: orderId,
@@ -618,26 +722,22 @@
                 city: document.getElementById('custCity').value.trim(),
                 notes: document.getElementById('custNotes').value.trim(),
                 items: itemsSummary,
-                total: `Rs. ${total.toLocaleString()}`
+                total: `Rs. ${total.toLocaleString()} (${paymentMethod})` // Indicates payment method in DB
             });
 
-            const finalUrl = `${GOOGLE_SHEET_URL}?${queryParams.toString()}`;
-
-            try {
-                await fetch(finalUrl, { mode: 'no-cors' });
-            } catch (err) {
-                console.warn("Spreadsheet submission error:", err);
-            }
+            try { await fetch(`${GOOGLE_SHEET_URL}?${queryParams.toString()}`, { mode: 'no-cors' }); } 
+            catch (err) { console.warn("Spreadsheet error:", err); }
 
             closeCheckout();
             document.getElementById('successOrderId').textContent = `Order ID: #${orderId}`;
             document.getElementById('successModal').classList.add('open');
 
-            cart = [];
-            saveCart();
-            document.getElementById('orderForm').reset();
-            btn.disabled = false;
-            btn.textContent = "Confirm & Place Order";
+            cart = []; saveCart(); document.getElementById('orderForm').reset();
+            // Reset to COD Default
+            document.querySelector('input[value="COD"]').checked = true;
+            togglePaymentInfo();
+            
+            btn.disabled = false; btn.textContent = "Confirm & Place Order";
         }
 
         function closeSuccess() {
@@ -654,3 +754,4 @@
     </script>
 </body>
 </html>
+```
